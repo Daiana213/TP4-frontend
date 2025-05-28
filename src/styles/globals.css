@@ -1,0 +1,46 @@
+:root {
+  /* Colores principales */
+  --primary-color: #e10600;
+  --secondary-color: #15151e;
+  --accent-color: #ff4d4d;
+  
+  /* Colores de texto */
+  --text-color: #333333;
+  --text-light: #666666;
+  
+  /* Colores neutros */
+  --white: #ffffff;
+  --gray-light: #f5f5f5;
+  --gray: #666666;
+  
+  /* Efectos y gradientes */
+  --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Transiciones */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Tipografía */
+  --font-primary: 'Inter', sans-serif;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* Espaciado */
+  --spacing-xs: 0.5rem;      /* 8px */
+  --spacing-sm: 1rem;        /* 16px */
+  --spacing-md: 1.5rem;      /* 24px */
+  --spacing-lg: 2rem;        /* 32px */
+  --spacing-xl: 2.5rem;      /* 40px */
+  
+  /* Border Radius */
+  --border-radius-sm: 0.25rem;   /* 4px */
+  --border-radius-md: 0.5rem;    /* 8px */
+  --border-radius-lg: 1rem;      /* 16px */
+  --border-radius-full: 9999px;
+}
