@@ -51,7 +51,7 @@ const Login = () => {
       localStorage.setItem('userName', data.usuario.nombre);
 
       // Redirigir al dashboard
-      navigate('/dashboard');
+      navigate('/inicio');
     } catch (error) {
       setErrors({ general: 'Error al conectar con el servidor' });
     }

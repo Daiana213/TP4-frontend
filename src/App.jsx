@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 import Registro from './components/Registro/Registro';
 import Login from './components/Login/Login';
+import Inicio from './components/Inicio/Inicio';
 import './styles/globals.css';
 
 function App() {
@@ -9,12 +10,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-      </Routes>
-      <Routes>
         <Route path="/registro" element={<Registro />} />
-      </Routes>
-      <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/inicio" element={<Inicio />} />
       </Routes>
     </Router>
   );
