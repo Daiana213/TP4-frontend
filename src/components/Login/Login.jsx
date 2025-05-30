@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { API_ENDPOINTS } from '../../../config/api';
+import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    contrasena: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -26,6 +28,25 @@ const Login = () => {
     e.preventDefault();
     setErrors({});
 
+    // Validación del lado del cliente
+    let formErrors = {};
+    if (!formData.email) {
+      formErrors.email = 'El email es requerido';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      formErrors.email = 'Formato de email inválido';
+    }
+
+    if (!formData.contrasena) {
+      formErrors.contrasena = 'La contraseña es requerida';
+    } else if (formData.contrasena.length < 6) {
+      formErrors.contrasena = 'La contraseña debe tener al menos 6 caracteres';
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
     try {
       const response = await fetch(API_ENDPOINTS.login, {
         method: 'POST',
@@ -34,7 +55,7 @@ const Login = () => {
         },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.password
+          contrasena: formData.contrasena
         })
       });
 
@@ -45,10 +66,8 @@ const Login = () => {
         return;
       }
 
-      // Guardar datos del usuario
-      localStorage.setItem('userId', data.usuario.id);
-      localStorage.setItem('userEmail', data.usuario.email);
-      localStorage.setItem('userName', data.usuario.nombre);
+      // Usar el método login del contexto
+      login(data.usuario, data.token);
 
       // Redirigir al dashboard
       navigate('/inicio');
@@ -72,7 +91,7 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              value={formData.email}
+              value={formData.email || ''}
               onChange={handleChange}
               className={errors.email ? 'error' : ''}
             />
@@ -80,16 +99,16 @@ const Login = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
+            <label htmlFor="contrasena">Contraseña</label>
             <input
               type="password"
-              id="password"
-              name="password"
-              value={formData.password}
+              id="contrasena"
+              name="contrasena"
+              value={formData.contrasena || ''}
               onChange={handleChange}
-              className={errors.password ? 'error' : ''}
+              className={errors.contrasena ? 'error' : ''}
             />
-            {errors.password && <span className="error-message">{errors.password}</span>}
+            {errors.contrasena && <span className="error-message">{errors.contrasena}</span>}
           </div>
 
           <button type="submit" className="submit-button">Iniciar Sesión</button>

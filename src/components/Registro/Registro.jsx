@@ -63,20 +63,19 @@ const Registro = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            nombre: formData.nombreCompleto,
+            nombre: formData.nombreCompleto, // Cambiar nombreCompleto a nombre
             email: formData.email,
-            password: formData.password
+            contrasena: formData.password // Asegurar que coincida con el backend
           })
         });
-
+  
         const data = await response.json();
-
+  
         if (!response.ok) {
           setErrors({ general: data.error || 'Error en el registro' });
           return;
         }
-
-        // Registro exitoso
+  
         alert('Registro exitoso. Por favor, inicia sesión.');
         navigate('/login');
       } catch (error) {
@@ -85,7 +84,7 @@ const Registro = () => {
     } else {
       setErrors(errores);
     }
-  };
+  };  
 
   return (
     <div className="registro-container">
