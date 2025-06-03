@@ -1,0 +1,75 @@
+.equipos-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipos-container main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e10600;
+}
+
+.equipos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.equipo-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.equipo-card:hover {
+  transform: translateY(-5px);
+}
+
+.equipo-card h2 {
+  color: #e10600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e10600;
+  padding-bottom: 0.5rem;
+}
+
+.equipo-info p {
+  margin: 0.5rem 0;
+}
+
+.pilotos-equipo {
+  margin-top: 1.5rem;
+}
+
+.pilotos-equipo h3 {
+  color: #e10600;
+  margin-bottom: 0.5rem;
+}
+
+.pilotos-equipo ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pilotos-equipo li {
+  padding: 0.3rem 0;
+}
+
+.cargando, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #e10600;
+}
