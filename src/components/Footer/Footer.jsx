@@ -5,6 +5,9 @@ const Footer = () => {
   return (
     <footer className="landing-footer">
       <p>&copy; 2024 F1 Race Journal. Tu experiencia personal en la F1.</p>
+      <div className="footer-link">
+        <link href="/">Inicio</link>
+      </div>
     </footer>
   );
 };

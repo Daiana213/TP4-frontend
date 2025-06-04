@@ -13,6 +13,7 @@ function Pilotos() {
     const fetchPilotos = async () => {
       try {
         const data = await apiService.obtenerPilotos();
+        console.log(data);
         setPilotos(data);
         setLoading(false);
       } catch (err) {
@@ -23,6 +24,8 @@ function Pilotos() {
 
     fetchPilotos();
   }, []);
+
+  console.log(pilotos);
 
   if (loading) return <div className="cargando">Cargando pilotos...</div>;
   if (error) return <div className="error">{error}</div>;

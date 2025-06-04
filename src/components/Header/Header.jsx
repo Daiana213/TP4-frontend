@@ -13,9 +13,19 @@ const Header = () => {
     navigate('/login');
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   return (
     <nav className="landing-nav">
-      <div className="nav-logo">F1 Race Journal</div>
+      <div 
+        className="nav-logo" 
+        onClick={handleLogoClick}
+        style={{ cursor: 'pointer' }}
+      >
+        F1 Race Journal
+      </div>
       <div className="nav-buttons">
         <button className="nav-button login" onClick={handleLogin}>
           Iniciar Sesión

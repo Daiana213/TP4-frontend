@@ -7,6 +7,8 @@ function Inicio() {
   const [carreras, setCarreras] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  console.log(carreras);
+
   useEffect(() => {
     fetch('http://localhost:3001/api/carreras')
       .then(res => res.json())

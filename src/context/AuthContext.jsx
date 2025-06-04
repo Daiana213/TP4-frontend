@@ -1,52 +1,66 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
+
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar si hay un usuario en localStorage al cargar
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    // Verificar si hay un token guardado
+    const token = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('userId');
+    const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('userName');
+
+    if (token && userId && userEmail && userName) {
+      setCurrentUser({
+        id: userId,
+        email: userEmail,
+        nombre: userName
+      });
+      setIsAuthenticated(true);
     }
     setLoading(false);
   }, []);
 
-  const login = (userData) => {
-    // Verificar si el usuario es administrador
-    // En un caso real, esta información vendría del backend
-    const isAdmin = userData.email === 'admin@example.com';
-    const userWithRole = { ...userData, isAdmin, role: isAdmin ? 'admin' : 'user' };
+  const login = (userData, token) => {
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('userId', userData.id);
+    localStorage.setItem('userEmail', userData.email);
+    localStorage.setItem('userName', userData.nombre);
     
-    setUser(userWithRole);
-    localStorage.setItem('user', JSON.stringify(userWithRole));
+    setCurrentUser(userData);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+    navigate('/login');
   };
 
-  // Valores calculados para facilitar verificaciones
-  const isAuthenticated = !!user;
-  const isAdmin = user?.isAdmin || false;
+  const value = {
+    currentUser,
+    isAuthenticated,
+    login,
+    logout,
+    loading
+  };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      login, 
-      logout, 
-      loading,
-      isAuthenticated,
-      isAdmin
-    }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-// Hook personalizado para facilitar el uso del contexto
-export const useAuth = () => useContext(AuthContext);
