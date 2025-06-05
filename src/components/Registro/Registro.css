@@ -1,66 +1,93 @@
+:root {
+  --primary-color: #e10600;
+  --primary-dark: #cc0000;
+  --input-border: #ccc;
+  --input-focus: #e10600;
+  --error-color: #dc3545;
+  --font-color: #333;
+  --bg-color: #ffffff;
+  --form-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--gray-light);
+  margin: 0;
+  padding: 0;
+}
+
 .registro-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
   justify-content: center;
-  background-color: white;
-  padding: 20px;
+  align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
 }
 
 .registro-form {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--form-shadow);
+  border: 1px solid #eee;
+  margin-top: 5rem;
 }
 
 .registro-form h2 {
   text-align: center;
-  color: var(--primary-color);
+  color: var(--text-color);
   margin-bottom: 2rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--font-color);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #ddd;
-  border-radius: 5px;
+  border: 2px solid var(--input-border);
+  border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus-visible {
   outline: none;
-  border-color: #e10600;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.15);
 }
 
 .form-group input.error {
-  border-color: #dc3545;
+  border-color: var(--error-color);
 }
 
 .error-message {
-  color: #dc3545;
+  color: var(--error-color);
   font-size: 0.875rem;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
 .error-message.general {
-  background-color: #dc3545;
+  background-color: var(--error-color);
   color: white;
   padding: 1rem;
   border-radius: 5px;
@@ -71,10 +98,10 @@
 button[type="submit"] {
   width: 100%;
   padding: 1rem;
-  background-color: #e10600;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -83,9 +110,9 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #cc0000;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: var(--primary-dark);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button[type="submit"]:active {
@@ -97,4 +124,18 @@ button[type="submit"]:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   transform: none;
+}
+
+@media (max-width: 480px) {
+  .registro-form {
+    padding: 1.5rem;
+  }
+
+  .registro-form h2 {
+    font-size: 1.5rem;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+  }
 }
