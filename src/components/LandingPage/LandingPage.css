@@ -11,6 +11,11 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.landing-main {
+  display: flex;
+  flex-direction: column;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -122,6 +127,13 @@ body {
   text-align: center;
   padding: 8rem 2rem;
   position: relative;
+  width: 100%;
+  box-sizing: border-box; /* Incluye padding en el ancho */
+  width: 100vw;
+  margin: 0;
+  padding: 8rem 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .hero-section h1 {
