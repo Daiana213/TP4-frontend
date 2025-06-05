@@ -89,6 +89,7 @@ export const Registro = () => {
   return (
     <div className="registro-container">
       <Header />
+      <main>
       <div className="registro-form">
         <h2>Registro de Usuario</h2>
         <form onSubmit={handleSubmit}>
@@ -150,6 +151,7 @@ export const Registro = () => {
           <button type="submit" className="submit-button">Registrarse</button>
         </form>
       </div>
+      </main>
       <Footer />
     </div>
   );

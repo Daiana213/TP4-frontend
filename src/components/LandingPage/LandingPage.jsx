@@ -33,17 +33,14 @@ const LandingPage = () => {
           <h2>Características Principales</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <span className="feature-icon">📅</span>
               <h3>Calendario de Carreras</h3>
               <p>Accede al calendario completo de la temporada</p>
             </div>
             <div className="feature-card">
-              <span className="feature-icon">📝</span>
               <h3>Notas Personales</h3>
               <p>Crea entradas detalladas para cada carrera</p>
             </div>
             <div className="feature-card">
-              <span className="feature-icon">🏆</span>
               <h3>Registro de Podios</h3>
               <p>Guarda los resultados de cada Gran Premio</p>
             </div>
