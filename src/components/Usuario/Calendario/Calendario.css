@@ -1,0 +1,63 @@
+.calendario-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.calendario-container main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e10600;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.granpremio-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.granpremio-card:hover {
+  transform: translateY(-5px);
+}
+
+.granpremio-card h2 {
+  background-color: #e10600;
+  color: white;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.granpremio-info {
+  padding: 1rem;
+}
+
+.granpremio-info p {
+  margin: 0.5rem 0;
+}
+
+.cargando, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #e10600;
+}

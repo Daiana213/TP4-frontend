@@ -7,6 +7,7 @@ function Admin() {
   const [activeTab, setActiveTab] = useState('pilotos');
   const [pilotos, setPilotos] = useState([]);
   const [equipos, setEquipos] = useState([]);
+  const [calendario, setCalendario] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({});
@@ -24,11 +25,16 @@ function Admin() {
         if (!response.ok) throw new Error('Error al cargar pilotos');
         const data = await response.json();
         setPilotos(data);
-      } else {
+      } else if (activeTab === 'equipos') {
         const response = await fetch('http://localhost:3000/equipos');
         if (!response.ok) throw new Error('Error al cargar equipos');
         const data = await response.json();
         setEquipos(data);
+      } else if (activeTab === 'calendario') {
+        const response = await fetch('http://localhost:3000/calendario');
+        if (!response.ok) throw new Error('Error al cargar calendario');
+        const data = await response.json();
+        setCalendario(data);
       }
       setLoading(false);
     } catch (err) {
@@ -73,8 +79,32 @@ function Admin() {
   };
 
   const handleEdit = (item) => {
-    setFormData(item);
+    // Si es un gran premio, formatear la fecha para el input date
+    if (activeTab === 'calendario' && item.fecha) {
+      const fecha = new Date(item.fecha);
+      const fechaFormateada = fecha.toISOString().split('T')[0];
+      setFormData({...item, fecha: fechaFormateada});
+    } else {
+      setFormData(item);
+    }
     setEditingId(item.id);
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('¿Estás seguro de que quieres eliminar este elemento?')) return;
+    
+    try {
+      const response = await fetch(`http://localhost:3000/admin/${activeTab}/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Error al eliminar');
+      
+      // Refrescar datos
+      fetchData();
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const renderPilotosForm = () => (
@@ -280,6 +310,89 @@ function Admin() {
     </form>
   );
 
+  const renderCalendarioForm = () => (
+    <form onSubmit={handleSubmit} className="admin-form">
+      <h3>{editingId ? 'Editar Gran Premio' : 'Añadir Gran Premio'}</h3>
+      <div className="form-group">
+        <label>Nombre:</label>
+        <input 
+          type="text" 
+          name="nombre" 
+          value={formData.nombre || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <div className="form-group">
+        <label>Fecha:</label>
+        <input 
+          type="date" 
+          name="fecha" 
+          value={formData.fecha || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <div className="form-group">
+        <label>Circuito:</label>
+        <input 
+          type="text" 
+          name="circuito" 
+          value={formData.circuito || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <div className="form-group">
+        <label>País:</label>
+        <input 
+          type="text" 
+          name="pais" 
+          value={formData.pais || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <div className="form-group">
+        <label>Número de vueltas:</label>
+        <input 
+          type="number" 
+          name="numero_vueltas" 
+          value={formData.numero_vueltas || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <div className="form-group">
+        <label>Horario (hora):</label>
+        <input 
+          type="number" 
+          name="horarios" 
+          min="0"
+          max="23"
+          value={formData.horarios || ''} 
+          onChange={handleInputChange} 
+          required 
+        />
+      </div>
+      <button type="submit" className="submit-btn">
+        {editingId ? 'Actualizar' : 'Añadir'}
+      </button>
+      {editingId && (
+        <button 
+          type="button" 
+          className="cancel-btn" 
+          onClick={() => {
+            setFormData({});
+            setEditingId(null);
+          }}
+        >
+          Cancelar
+        </button>
+      )}
+    </form>
+  );
+
   return (
     <div className="admin-container">
       <Header />
@@ -299,15 +412,31 @@ function Admin() {
           >
             Equipos
           </button>
+          <button 
+            className={`tab-btn ${activeTab === 'calendario' ? 'active' : ''}`}
+            onClick={() => setActiveTab('calendario')}
+          >
+            Calendario
+          </button>
         </div>
 
         <div className="admin-content">
           <div className="admin-form-container">
-            {activeTab === 'pilotos' ? renderPilotosForm() : renderEquiposForm()}
+            {activeTab === 'pilotos' 
+              ? renderPilotosForm() 
+              : activeTab === 'equipos' 
+                ? renderEquiposForm() 
+                : renderCalendarioForm()}
           </div>
 
           <div className="admin-list-container">
-            <h3>Lista de {activeTab === 'pilotos' ? 'Pilotos' : 'Equipos'}</h3>
+            <h3>Lista de {
+              activeTab === 'pilotos' 
+                ? 'Pilotos' 
+                : activeTab === 'equipos' 
+                  ? 'Equipos' 
+                  : 'Grandes Premios'
+            }</h3>
             {loading ? (
               <p>Cargando...</p>
             ) : error ? (
@@ -329,7 +458,7 @@ function Admin() {
                       </button>
                     </div>
                   ))
-                ) : (
+                ) : activeTab === 'equipos' ? (
                   equipos.map(equipo => (
                     <div key={equipo.id} className="admin-item">
                       <div className="admin-item-info">
@@ -342,6 +471,30 @@ function Admin() {
                       >
                         Editar
                       </button>
+                    </div>
+                  ))
+                ) : (
+                  calendario.map(granPremio => (
+                    <div key={granPremio.id} className="admin-item">
+                      <div className="admin-item-info">
+                        <p><strong>{granPremio.nombre}</strong></p>
+                        <p>Fecha: {new Date(granPremio.fecha).toLocaleDateString()}</p>
+                        <p>Circuito: {granPremio.circuito}</p>
+                      </div>
+                      <div className="admin-item-actions">
+                        <button 
+                          className="edit-btn" 
+                          onClick={() => handleEdit(granPremio)}
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          className="delete-btn" 
+                          onClick={() => handleDelete(granPremio.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}

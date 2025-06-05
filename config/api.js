@@ -15,7 +15,13 @@ export const API_ENDPOINTS = {
   
   // Pilotos y Equipos
   pilotos: `${API_BASE_URL}/pilotos`,
-  equipos: `${API_BASE_URL}/equipos`
+  equipos: `${API_BASE_URL}/equipos`,
+  
+  // Calendario
+  calendario: `${API_BASE_URL}/calendario`,
+  calendarioById: (id) => `${API_BASE_URL}/calendario/${id}`,
+  adminCalendario: `${API_BASE_URL}/admin/calendario`,
+  adminCalendarioById: (id) => `${API_BASE_URL}/admin/calendario/${id}`
 };
 
 // Funciones de servicio para las llamadas API
@@ -99,6 +105,51 @@ export const apiService = {
   obtenerEquipos: async () => {
     const response = await fetch(API_ENDPOINTS.equipos);
     if (!response.ok) throw new Error('Error al obtener equipos');
+    return response.json();
+  },
+
+  // Calendario
+  obtenerCalendario: async () => {
+    const response = await fetch(API_ENDPOINTS.calendario);
+    if (!response.ok) throw new Error('Error al obtener calendario');
+    return response.json();
+  },
+
+  obtenerGranPremio: async (id) => {
+    const response = await fetch(API_ENDPOINTS.calendarioById(id));
+    if (!response.ok) throw new Error('Error al obtener gran premio');
+    return response.json();
+  },
+
+  crearGranPremio: async (granPremioData) => {
+    const response = await fetch(API_ENDPOINTS.adminCalendario, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(granPremioData)
+    });
+    if (!response.ok) throw new Error('Error al crear gran premio');
+    return response.json();
+  },
+
+  actualizarGranPremio: async (id, granPremioData) => {
+    const response = await fetch(API_ENDPOINTS.adminCalendarioById(id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(granPremioData)
+    });
+    if (!response.ok) throw new Error('Error al actualizar gran premio');
+    return response.json();
+  },
+
+  eliminarGranPremio: async (id) => {
+    const response = await fetch(API_ENDPOINTS.adminCalendarioById(id), {
+      method: 'DELETE'
+    });
+    if (!response.ok) throw new Error('Error al eliminar gran premio');
     return response.json();
   }
 };

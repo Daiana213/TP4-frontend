@@ -19,6 +19,7 @@ const AdminHeader = () => {
         <button className="admin-link" onClick={() => navigate('/admin')}>Dashboard</button>
         <button className="admin-link" onClick={() => navigate('/admin/pilotos')}>Gestionar Pilotos</button>
         <button className="admin-link" onClick={() => navigate('/admin/equipos')}>Gestionar Equipos</button>
+        <button className="admin-link" onClick={() => navigate('/admin/calendario')}>Gestionar Calendario</button>
         <button className="admin-link" onClick={() => navigate('/inicio')}>Ver Sitio</button>
       </div>
       <div className="admin-buttons">

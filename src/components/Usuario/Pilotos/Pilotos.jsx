@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/UserHeader';
-import Footer from '../Footer/Footer';
-import { apiService } from '../../../config/api';
+import Header from '../../Header/UserHeader';
+import Footer from '../../Footer/Footer';
+import { apiService } from '../../../../config/api';
 import './Pilotos.css';
 
 function Pilotos() {
