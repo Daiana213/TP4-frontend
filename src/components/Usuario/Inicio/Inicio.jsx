@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
 import { apiService } from '../../../../config/api';
+import { useAuth } from '../../../context/AuthContext';
 import './Inicio.css';
 
 function Inicio() {
   const [carreras, setCarreras] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchCarreras = async () => {
@@ -31,7 +33,7 @@ function Inicio() {
     <div className="inicio-container">
       <Header />
       <main>
-        <h1 className="titulo">Calendario F1 2025</h1>
+        <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
         <table className="tabla-carreras">
           <thead>
             <tr>
