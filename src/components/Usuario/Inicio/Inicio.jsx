@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
+import { apiService } from '../../../../config/api';
 import './Inicio.css';
 
 function Inicio() {
   const [carreras, setCarreras] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  console.log(carreras);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/carreras')
-      .then(res => res.json())
-      .then(data => {
+    const fetchCarreras = async () => {
+      try {
+        const data = await apiService.obtenerCalendario();
         setCarreras(data);
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      } catch (err) {
+        setError('Error al cargar el calendario');
+        setLoading(false);
+      }
+    };
+
+    fetchCarreras();
   }, []);
 
   if (loading) return <div className="cargando">Cargando calendario...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="inicio-container">
