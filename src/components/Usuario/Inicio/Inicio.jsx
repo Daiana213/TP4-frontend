@@ -1,31 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/UserHeader';
-import Footer from '../Footer/Footer';
+import Header from '../../Header/UserHeader';
+import Footer from '../../Footer/Footer';
+import { apiService } from '../../../../config/api';
+import { useAuth } from '../../../context/AuthContext';
 import './Inicio.css';
 
 function Inicio() {
   const [carreras, setCarreras] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  console.log(carreras);
+  const [error, setError] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/carreras')
-      .then(res => res.json())
-      .then(data => {
+    const fetchCarreras = async () => {
+      try {
+        const data = await apiService.obtenerCalendario();
         setCarreras(data);
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      } catch (err) {
+        setError('Error al cargar el calendario');
+        setLoading(false);
+      }
+    };
+
+    fetchCarreras();
   }, []);
 
   if (loading) return <div className="cargando">Cargando calendario...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="inicio-container">
       <Header />
       <main>
-        <h1 className="titulo">Calendario F1 2025</h1>
+        <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
         <table className="tabla-carreras">
           <thead>
             <tr>

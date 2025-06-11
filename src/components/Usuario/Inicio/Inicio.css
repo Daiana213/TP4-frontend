@@ -1,0 +1,222 @@
+/* Base Styles */
+.inicio-container {
+  min-height: 100vh;
+  background: #181818;
+  color: #fff;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.inicio-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+/* Welcome Card Styles */
+.welcome-card {
+  max-width: 900px;
+  width: 100%;
+  background: linear-gradient(135deg, #222 0%, #2a2a2a 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin: 0 auto;
+  border-left: 4px solid #e10600;
+}
+
+.welcome-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Greeting Styles */
+.greeting-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.wave-emoji {
+  font-size: 2.8rem;
+  margin-right: 1rem;
+  animation: wave 1.5s ease-in-out infinite;
+  display: inline-block;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.titulo {
+  text-align: center;
+  font-size: 3rem;
+  margin: 0;
+  background: linear-gradient(90deg, #e10600, #ff4d4d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.username-highlight {
+  position: relative;
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: #e10600;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+  transition: all 0.3s ease;
+}
+
+.username-highlight:hover {
+  text-shadow: 0 0 8px rgba(225, 6, 0, 0.6);
+}
+
+/* Content Styles */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin-bottom: 1rem;
+}
+
+.fact-card {
+  background: rgba(34, 34, 34, 0.7);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 2px solid #e10600;
+}
+
+.fact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.fact-title {
+  color: #e10600;
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.dato-f1 {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .welcome-card {
+    padding: 1.5rem;
+  }
+  
+  .titulo {
+    font-size: 2.5rem;
+  }
+  
+  .wave-emoji {
+    font-size: 2.2rem;
+  }
+  
+  .welcome-message {
+    font-size: 1.1rem;
+  }
+  
+  .dato-f1 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 1.2rem;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+  }
+  
+  .wave-emoji {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+  }
+  
+  .fact-title {
+    font-size: 1.1rem;
+  }
+  
+  .welcome-message {
+    font-size: 1rem;
+  }
+  
+  .dato-f1 {
+    font-size: 0.9rem;
+  }
+}
+
+/* Keep existing table styles for compatibility */
+.tabla-carreras {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: #222;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.tabla-carreras th, .tabla-carreras td {
+  padding: 0.7rem;
+  text-align: center;
+}
+
+.tabla-carreras thead tr {
+  background: #e10600;
+  color: #fff;
+}
+
+.tabla-carreras tbody tr:nth-child(even) {
+  background: #292929;
+}
+
+.tabla-carreras tbody tr:nth-child(odd) {
+  background: #222;
+}
+
+.cargando {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}

@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import { API_ENDPOINTS } from '../../../config/api';
 import './Registro.css';
 
-const Registro = () => {
+export const Registro = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombreCompleto: '',
@@ -156,5 +156,3 @@ const Registro = () => {
     </div>
   );
 };
-
-export default Registro;
