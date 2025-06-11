@@ -47,6 +47,7 @@ main {
   color: var(--text-color);
   margin-bottom: 2rem;
   font-size: 2rem;
+  font-family: var(--font-primary);
 }
 
 .form-group {

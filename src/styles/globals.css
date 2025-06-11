@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
 :root {
   /* Colores principales */
   --primary-color: #e10600;
@@ -20,8 +24,9 @@
   /* Transiciones */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
-  /* Tipografía */
-  --font-primary: 'Inter', sans-serif;
+
+  /* Tipografía */ 
+  --font-primary: 'Orbitron', sans-serif;
   --font-size-xs: 0.75rem;    /* 12px */
   --font-size-sm: 0.875rem;   /* 14px */
   --font-size-base: 1rem;     /* 16px */

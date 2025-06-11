@@ -23,7 +23,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-primary);
   line-height: 1.6;
   color: var(--text-color);
   overflow-x: hidden;
@@ -51,6 +51,7 @@ body {
 }
 
 .nav-logo {
+  font-family: var(--font-primary);
   color: var(--white);
   font-size: 1.8rem;
   font-weight: 800;
@@ -137,6 +138,7 @@ body {
 }
 
 .hero-section h1 {
+  font-family: var(--font-primary);
   font-size: 4rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
@@ -165,6 +167,7 @@ body {
   border-radius: 30px;
   font-size: 1.2rem;
   font-weight: 600;
+  font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow);
@@ -188,6 +191,7 @@ body {
   margin-bottom: 4rem;
   color: var(--secondary-color);
   position: relative;
+  font-family: var(--font-primary);
 }
 
 .features-section h2::after {
@@ -220,6 +224,11 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+.feature-card h3 {
+  font-family: var(--font-primary);
+}
+
+
 .feature-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -227,11 +236,13 @@ body {
 }
 
 .feature-icon {
-  font-size: 3.5rem;
+  font-size: 3rem !important;
+  color: var(--secondary-color);
   margin-bottom: 1.5rem;
-  display: block;
+  display: inline-block;
   transition: var(--transition);
 }
+
 
 .feature-card:hover .feature-icon {
   transform: scale(1.1);
