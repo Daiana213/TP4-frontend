@@ -21,17 +21,17 @@ function Admin() {
     setLoading(true);
     try {
       if (activeTab === 'pilotos') {
-        const response = await fetch('http://localhost:3000/pilotos');
+        const response = await fetch('http://localhost:3000/admin/pilotos');
         if (!response.ok) throw new Error('Error al cargar pilotos');
         const data = await response.json();
         setPilotos(data);
       } else if (activeTab === 'equipos') {
-        const response = await fetch('http://localhost:3000/equipos');
+        const response = await fetch('http://localhost:3000/admin/equipos');
         if (!response.ok) throw new Error('Error al cargar equipos');
         const data = await response.json();
         setEquipos(data);
       } else if (activeTab === 'calendario') {
-        const response = await fetch('http://localhost:3000/calendario');
+        const response = await fetch('http://localhost:3000/admin/calendario');
         if (!response.ok) throw new Error('Error al cargar calendario');
         const data = await response.json();
         setCalendario(data);

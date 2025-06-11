@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     const userId = localStorage.getItem('userId');
     const userEmail = localStorage.getItem('userEmail');
     const userName = localStorage.getItem('userName');
+    const userIsAdmin = localStorage.getItem('userIsAdmin') === 'true';
 
     if (token && userId && userEmail && userName) {
       setCurrentUser({
@@ -25,6 +27,7 @@ export const AuthProvider = ({ children }) => {
         nombre: userName
       });
       setIsAuthenticated(true);
+      setIsAdmin(userIsAdmin);
     }
     setLoading(false);
   }, []);
@@ -34,9 +37,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('userId', userData.id);
     localStorage.setItem('userEmail', userData.email);
     localStorage.setItem('userName', userData.nombre);
+    localStorage.setItem('userIsAdmin', userData.isAdmin || false);
     
     setCurrentUser(userData);
     setIsAuthenticated(true);
+    setIsAdmin(userData.isAdmin || false);
   };
 
   const logout = () => {
@@ -44,15 +49,18 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('userId');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userIsAdmin');
     
     setCurrentUser(null);
     setIsAuthenticated(false);
+    setIsAdmin(false);
     navigate('/login');
   };
 
   const value = {
     currentUser,
     isAuthenticated,
+    isAdmin,
     login,
     logout,
     loading
