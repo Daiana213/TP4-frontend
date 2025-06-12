@@ -30,8 +30,8 @@ function Equipos() {
   return (
     <div className="equipos-container">
       <Header />
+      <h1 className="tituloequipo">Equipos 2025</h1>
       <main>
-        <h1 className="titulo">Equipos F1 2025</h1>
         <div className="equipos-grid">
           {equipos.map((equipo) => (
             <div key={equipo.id} className="equipo-card">
