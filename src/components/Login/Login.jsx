@@ -60,9 +60,15 @@ const Login = () => {
       });
 
       const data = await response.json();
+      console.log('Respuesta del servidor:', data);
 
       if (!response.ok) {
         setErrors({ general: data.error || 'Error en el inicio de sesión' });
+        return;
+      }
+
+      if (!data.usuario) {
+        setErrors({ general: 'Error al obtener datos del usuario' });
         return;
       }
 
@@ -71,7 +77,7 @@ const Login = () => {
 
       // Redirigir según el rol del usuario
       if (data.usuario.isAdmin) {
-        navigate('/admin');
+        navigate('/admin'); 
       } else {
         navigate('/inicio');
       }

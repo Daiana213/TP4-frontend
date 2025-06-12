@@ -13,24 +13,6 @@
   color: #ff0000;
 }
 
-.admin-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.admin-link {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.admin-link:hover {
-  color: #ff0000;
-}
-
 .admin-buttons {
   display: flex;
   gap: 1rem;

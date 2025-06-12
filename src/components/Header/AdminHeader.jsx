@@ -15,13 +15,6 @@ const AdminHeader = () => {
   return (
     <nav className="admin-nav">
       <div className="admin-logo">F1 Race Journal - Panel de Administración</div>
-      <div className="admin-links">
-        <button className="admin-link" onClick={() => navigate('/admin')}>Dashboard</button>
-        <button className="admin-link" onClick={() => navigate('/admin/pilotos')}>Gestionar Pilotos</button>
-        <button className="admin-link" onClick={() => navigate('/admin/equipos')}>Gestionar Equipos</button>
-        <button className="admin-link" onClick={() => navigate('/admin/calendario')}>Gestionar Calendario</button>
-        <button className="admin-link" onClick={() => navigate('/inicio')}>Ver Sitio</button>
-      </div>
       <div className="admin-buttons">
         <button className="admin-button logout" onClick={handleLogout}>
           Cerrar Sesión
