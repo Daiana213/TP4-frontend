@@ -69,8 +69,12 @@ const Login = () => {
       // Usar el método login del contexto
       login(data.usuario, data.token);
 
-      // Redirigir al dashboard
-      navigate('/inicio');
+      // Redirigir según el rol del usuario
+      if (data.usuario.isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/inicio');
+      }
     } catch (error) {
       setErrors({ general: 'Error al conectar con el servidor' });
     }
