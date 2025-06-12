@@ -12,6 +12,7 @@
   font-weight: bold;
   color: #e10600;
   cursor: pointer;
+  font-family: var(--font-primary);
 }
 
 .user-links {
