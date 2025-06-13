@@ -16,9 +16,9 @@ function Inicio() {
       try {
         const data = await apiService.obtenerCalendario();
         setCarreras(data);
-        setLoading(false);
       } catch (err) {
-        setError('Error al cargar el calendario');
+        setError(`Error al cargar el calendario: ${err.message}`);
+      } finally {
         setLoading(false);
       }
     };
@@ -26,37 +26,52 @@ function Inicio() {
     fetchCarreras();
   }, []);
 
-  if (loading) return <div className="cargando">Cargando calendario...</div>;
+  const formatearFecha = (fecha) => {
+    return new Date(fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  // Filtrar las próximas dos carreras
+  const hoy = new Date();
+  const proximasCarreras = carreras
+    .filter((carrera) => new Date(carrera.fecha) > hoy) // Solo carreras futuras
+    .slice(0, 2); // Tomar las primeras dos
+
+  if (loading) return <div className="cargando"><span className="spinner"></span> Cargando calendario...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="inicio-container">
       <Header />
-      <main>
         <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
-        <table className="tabla-carreras">
-          <thead>
-            <tr>
-              <th>Ronda</th>
-              <th>Gran Premio</th>
-              <th>Fecha</th>
-              <th>País</th>
-              <th>Circuito</th>
-            </tr>
-          </thead>
-          <tbody>
-            {carreras.map((carrera) => (
-              <tr key={carrera.id}>
-                <td>{carrera.ronda}</td>
-                <td>{carrera.nombre}</td>
-                <td>{carrera.fecha}</td>
-                <td>{carrera.pais}</td>
-                <td>{carrera.circuito}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
+        <section className="calendario">
+          <h2>Próximas Carreras</h2>
+          {proximasCarreras.length === 0 ? (
+            <p>No hay carreras próximas disponibles.</p>
+          ) : (
+            <table className="tabla-carreras">
+              <thead>
+                <tr>
+                  <th>Ronda</th>
+                  <th>Gran Premio</th>
+                  <th>Fecha</th>
+                  <th>País</th>
+                  <th>Circuito</th>
+                </tr>
+              </thead>
+              <tbody>
+                {proximasCarreras.map((carrera) => (
+                  <tr key={carrera.id}>
+                    <td>{carrera.ronda}</td>
+                    <td>{carrera.nombre}</td>
+                    <td>{formatearFecha(carrera.fecha)}</td>
+                    <td>{carrera.pais}</td>
+                    <td>{carrera.circuito}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </section>
       <Footer />
     </div>
   );

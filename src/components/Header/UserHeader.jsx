@@ -22,7 +22,6 @@ const UserHeader = () => {
         <button className="user-link" onClick={() => navigate('/calendario')}>Calendario</button>
       </div>
       <div className="user-profile">
-        <span className="user-greeting">Hola, {user?.nombre || 'Usuario'}</span>
         <button className="user-button logout" onClick={handleLogout}>
           Cerrar Sesión
         </button>

@@ -1,7 +1,5 @@
 .calendario-container {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -34,7 +32,6 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   font-family: var(--font-primary);
-  /* Importante: que el box no ocupe 100% forzado */
   width: 100%;
   box-sizing: border-box;
 }
