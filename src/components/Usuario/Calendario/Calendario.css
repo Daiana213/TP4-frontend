@@ -1,6 +1,5 @@
 .calendario-container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -21,7 +20,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* aumento a 300px */
   gap: 1.5rem 1.5rem;
-  padding: 1rem;
+  padding: 2rem;
   box-sizing: border-box;
   max-width: 100%;
 }

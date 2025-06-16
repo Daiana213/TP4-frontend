@@ -5,7 +5,8 @@ import './UserHeader.css';
 
 const UserHeader = () => {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout, currentUser } = useAuth();
+
 
   const handleLogout = () => {
     logout();
@@ -22,7 +23,7 @@ const UserHeader = () => {
         <button className="user-link" onClick={() => navigate('/calendario')}>Calendario</button>
       </div>
       <div className="user-profile">
-        <span className="user-greeting">Hola, {user?.nombre || 'Usuario'}</span>
+      <span className="user-greeting">Hola, {currentUser?.nombre || 'Usuario'}</span>
         <button className="user-button logout" onClick={handleLogout}>
           Cerrar Sesión
         </button>

@@ -79,6 +79,7 @@ const Login = () => {
       if (data.usuario.isAdmin) {
         navigate('/admin'); 
       } else {
+        login(data.usuario, data.token);
         navigate('/inicio');
       }
     } catch (error) {

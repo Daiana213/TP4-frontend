@@ -1,4 +1,3 @@
-// Pilotos.jsx (versión modificada)
 import React, { useState, useEffect } from 'react';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
@@ -6,7 +5,7 @@ import { apiService } from '../../../../config/api';
 import './Pilotos.css';
 
 function Pilotos() {
-  const [pilotosPorEquipo, setPilotosPorEquipo] = useState({});
+  const [pilotos, setPilotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,14 +14,16 @@ function Pilotos() {
       try {
         const data = await apiService.obtenerPilotos();
 
-        const grupos = data.reduce((acc, piloto) => {
-          const equipo = piloto.Equipo?.Nombre || 'Sin equipo';
-          if (!acc[equipo]) acc[equipo] = [];
-          acc[equipo].push(piloto);
-          return acc;
-        }, {});
+        // Ordenar y "aplanar" el array: pilotos ordenados por equipo
+        // Suponemos que los pilotos ya vienen con propiedad Equipo.Nombre
+        // Ordenamos por equipo para mantener agrupación lógica (opcional)
+        data.sort((a, b) => {
+          if (a.Equipo?.Nombre < b.Equipo?.Nombre) return -1;
+          if (a.Equipo?.Nombre > b.Equipo?.Nombre) return 1;
+          return 0;
+        });
 
-        setPilotosPorEquipo(grupos);
+        setPilotos(data);
         setLoading(false);
       } catch (err) {
         setError('Error al cargar los pilotos');
@@ -40,46 +41,18 @@ function Pilotos() {
     <div className="pilotos-container">
       <Header />
       <h1 className="titulopiloto">PILOTOS 2025</h1>
-      <main>  
+      <main>
         <div className="grid-pilotos">
-          {Object.entries(pilotosPorEquipo).map(([equipoNombre, grupo], index) => (
-            <div key={index} className="fila-equipo">
-              {/* Piloto 1 */}
-              <div className="piloto-card">
-                {grupo[0] ? (
-                  <>
-                    <h3>{grupo[0].Nombre}</h3>
-                    <div className="piloto-info">
-                      <p><strong>Número:</strong> {grupo[0].Numero}</p>
-                      <p><strong>País:</strong> {grupo[0].Pais}</p>
-                      <p><strong>Puntos:</strong> {grupo[0].Puntos}</p>
-                      <p><strong>Campeonatos:</strong> {grupo[0].Campeonatos}</p>
-                      <p><strong>Podios:</strong> {grupo[0].Podios}</p>
-                      <p><strong>Victorias:</strong> {grupo[0].Wins}</p>
-                    </div>
-                  </>
-                ) : (
-                  <p>No hay piloto 1</p>
-                )}
-              </div>
-  
-              {/* Piloto 2 */}
-              <div className="piloto-card">
-                {grupo[1] ? (
-                  <>
-                    <h3>{grupo[1].Nombre}</h3>
-                    <div className="piloto-info">
-                      <p><strong>Número:</strong> {grupo[1].Numero}</p>
-                      <p><strong>País:</strong> {grupo[1].Pais}</p>
-                      <p><strong>Puntos:</strong> {grupo[1].Puntos}</p>
-                      <p><strong>Campeonatos:</strong> {grupo[1].Campeonatos}</p>
-                      <p><strong>Podios:</strong> {grupo[1].Podios}</p>
-                      <p><strong>Victorias:</strong> {grupo[1].Wins}</p>
-                    </div>
-                  </>
-                ) : (
-                  <p>No hay piloto 2</p>
-                )}
+          {pilotos.map((piloto, index) => (
+            <div key={index} className="piloto-card">
+              <h3>{piloto.Nombre}</h3>
+              <div className="piloto-info">
+                <p><strong>Número:</strong> {piloto.Numero}</p>
+                <p><strong>País:</strong> {piloto.Pais}</p>
+                <p><strong>Puntos:</strong> {piloto.Puntos}</p>
+                <p><strong>Campeonatos:</strong> {piloto.Campeonatos}</p>
+                <p><strong>Podios:</strong> {piloto.Podios}</p>
+                <p><strong>Victorias:</strong> {piloto.Wins}</p>
               </div>
             </div>
           ))}
@@ -88,8 +61,6 @@ function Pilotos() {
       <Footer />
     </div>
   );
-  
-  
 }
 
 export default Pilotos;
