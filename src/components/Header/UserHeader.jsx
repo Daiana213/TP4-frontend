@@ -18,6 +18,7 @@ const UserHeader = () => {
       <div className="user-logo" onClick={() => navigate('/inicio')}>F1 Race Journal</div>
       <div className="user-links">
         <button className="user-link" onClick={() => navigate('/inicio')}>Inicio</button>
+        <button className="user-link" onClick={() => navigate('/entradas')}>Entrada</button>
         <button className="user-link" onClick={() => navigate('/pilotos')}>Pilotos</button>
         <button className="user-link" onClick={() => navigate('/equipos')}>Equipos</button>
         <button className="user-link" onClick={() => navigate('/calendario')}>Calendario</button>

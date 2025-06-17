@@ -6,6 +6,7 @@ import Inicio from './components/Usuario/Inicio/Inicio';
 import Pilotos from './components/Usuario/Pilotos/Pilotos';
 import Equipos from './components/Usuario/Equipos/Equipos';
 import Calendario from './components/Usuario/Calendario/Calendario';
+import Entradas from './components/Usuario/Entradas/Entradas';
 import Admin from './components/Admin/Admin';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
@@ -20,53 +21,12 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/inicio" element={
-            <ProtectedRoute>
-              <Inicio />
-            </ProtectedRoute>
-          } />
-           <Route path="/pilotos" element={
-            <ProtectedRoute>
-              <Pilotos />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/equipos" element={
-            <ProtectedRoute>
-              <Equipos />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/calendario" element={
-            <ProtectedRoute>
-              <Calendario />
-            </ProtectedRoute>
-          } />
-
-           <Route path="/admin" element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
-          } />
-
-          <Route path="/admin/pilotos" element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
-          } />
-
-          <Route path="/admin/equipos" element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
-          } />
-
-          <Route path="/admin/calendario" element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
-          } />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/inicio" element={<ProtectedRoute><Inicio /></ProtectedRoute>} />
+          <Route path="/pilotos" element={<ProtectedRoute><Pilotos /></ProtectedRoute>} />
+          <Route path="/equipos" element={<ProtectedRoute><Equipos /></ProtectedRoute>} />
+          <Route path="/calendario" element={<ProtectedRoute><Calendario /></ProtectedRoute>} />
+          <Route path="/entradas" element={<ProtectedRoute><Entradas /></ProtectedRoute>} />
+          <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
         </Routes>
       </AuthProvider>
     </Router>
