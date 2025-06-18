@@ -7,11 +7,14 @@ import Pilotos from './components/Usuario/Pilotos/Pilotos';
 import Equipos from './components/Usuario/Equipos/Equipos';
 import Calendario from './components/Usuario/Calendario/Calendario';
 import Entradas from './components/Usuario/Entradas/Entradas';
-import Admin from './components/Admin/Admin';
+import Admin from './components/Admin/Inicio/Admin';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import { AuthProvider } from './context/AuthContext';
 import './styles/globals.css';
+import AdminPilotos from './components/Admin/Pilotos/AdminPilotos';
+import AdminEquipos from './components/Admin/Equipos/AdminEquipos';
+import AdminCalendario from './components/Admin/Calendario/AdminCalendario';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           <Route path="/calendario" element={<ProtectedRoute><Calendario /></ProtectedRoute>} />
           <Route path="/entradas" element={<ProtectedRoute><Entradas /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+          <Route path="/admin/pilotos" element={<AdminRoute><AdminPilotos /></AdminRoute>} />
+          <Route path="/admin/equipos" element={<AdminRoute><AdminEquipos /></AdminRoute>} />
+          <Route path="/admin/calendario" element={<AdminRoute><AdminCalendario /></AdminRoute>} />
         </Routes>
       </AuthProvider>
     </Router>
