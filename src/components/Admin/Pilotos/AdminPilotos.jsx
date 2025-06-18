@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { apiService } from '../../../../config/api';
 import AdminHeader from '../AdminHeader';
 
 const AdminPilotos = () => {
   const [pilotos, setPilotos] = useState([]);
   const [formData, setFormData] = useState({
     nombre: '',
-    apellido: '',
     numero: '',
     equipoId: '',
-    nacionalidad: '',
+    pais: '',
+    puntos: '',
+    campeonatos: '',
+    podios: '',
+    victorias: '',
     fechaNacimiento: ''
   });
   const [equipos, setEquipos] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingPilotos, setLoadingPilotos] = useState(true);
+  const [loadingEquipos, setLoadingEquipos] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -23,26 +28,26 @@ const AdminPilotos = () => {
   }, []);
 
   const fetchPilotos = async () => {
+    setLoadingPilotos(true);
     try {
-      const response = await fetch('/api/pilotos');
-      if (!response.ok) throw new Error('Error al cargar pilotos');
-      const data = await response.json();
+      const data = await apiService.obtenerPilotos();
       setPilotos(data);
-      setLoading(false);
+      setLoadingPilotos(false);
     } catch (err) {
-      setError(err.message);
-      setLoading(false);
+      setError(`Error al cargar los pilotos: ${err.message}`);
+      setLoadingPilotos(false);
     }
   };
 
   const fetchEquipos = async () => {
+    setLoadingEquipos(true);
     try {
       const data = await apiService.obtenerEquipos();
       setEquipos(data);
-      setLoading(false);
+      setLoadingEquipos(false);
     } catch (err) {
-      setError('Error al cargar los equipos');
-      setLoading(false);
+      setError(`Error al cargar los equipos: ${err.message}`);
+      setLoadingEquipos(false);
     }
   };
 
@@ -57,39 +62,42 @@ const AdminPilotos = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Ensure numerical fields are properly converted
+    const submissionData = {
+      ...formData,
+      numero: Number(formData.numero),
+      equipoId: Number(formData.equipoId),
+      puntos: Number(formData.puntos),
+      campeonatos: Number(formData.campeonatos),
+      podios: Number(formData.podios),
+      victorias: Number(formData.victorias)
+    };
+    
     try {
-      const url = editMode 
-        ? `/api/pilotos/${currentId}` 
-        : '/api/pilotos';
-      
-      const method = editMode ? 'PUT' : 'POST';
-      
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) throw new Error('Error al guardar piloto');
+      if (editMode) {
+        await apiService.actualizarPiloto(currentId, submissionData);
+      } else {
+        await apiService.crearPiloto(submissionData);
+      }
       
       fetchPilotos();
-      
       resetForm();
+      setError(null); // Clear any previous errors on success
     } catch (err) {
-      setError(err.message);
+      setError(`Error al ${editMode ? 'actualizar' : 'crear'} piloto: ${err.message}`);
     }
   };
 
   const handleEdit = (piloto) => {
     setFormData({
       nombre: piloto.nombre,
-      apellido: piloto.apellido,
       numero: piloto.numero,
       equipoId: piloto.equipoId,
-      nacionalidad: piloto.nacionalidad,
+      pais: piloto.pais,
+      puntos: piloto.puntos,
+      campeonatos: piloto.campeonatos,
+      podios: piloto.podios,
+      victorias: piloto.victorias,
       fechaNacimiento: piloto.fechaNacimiento
     });
     setEditMode(true);
@@ -100,36 +108,31 @@ const AdminPilotos = () => {
     if (!window.confirm('¿Estás seguro de eliminar este piloto?')) return;
     
     try {
-      const response = await fetch(`/api/pilotos/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        }
-      });
-
-      if (!response.ok) throw new Error('Error al eliminar piloto');
-      
-      // Actualizar la lista de pilotos
+      await apiService.eliminarPiloto(id);
       fetchPilotos();
+      setError(null); // Clear any previous errors on success
     } catch (err) {
-      setError(err.message);
+      setError(`Error al eliminar piloto: ${err.message}`);
     }
   };
 
   const resetForm = () => {
     setFormData({
       nombre: '',
-      apellido: '',
       numero: '',
       equipoId: '',
-      nacionalidad: '',
+      pais: '',
+      puntos: '',
+      campeonatos: '',
+      podios: '',
+      victorias: '',
       fechaNacimiento: ''
     });
     setEditMode(false);
     setCurrentId(null);
   };
 
-  if (loading) return <div className="loading">Cargando...</div>;
+  if (loadingPilotos || loadingEquipos) return <div className="loading">Cargando...</div>;
 
   return (
     <div className="admin-container">
@@ -150,18 +153,6 @@ const AdminPilotos = () => {
                   id="nombre"
                   name="nombre"
                   value={formData.nombre}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="apellido">Apellido</label>
-                <input
-                  type="text"
-                  id="apellido"
-                  name="apellido"
-                  value={formData.apellido}
                   onChange={handleChange}
                   required
                 />
@@ -189,21 +180,69 @@ const AdminPilotos = () => {
                   required
                 >
                   <option value="">Seleccionar equipo</option>
-                  {equipos.map(equipo => (
+                  {equipos.map((equipo) => (
                     <option key={equipo.id} value={equipo.id}>
                       {equipo.nombre}
                     </option>
                   ))}
                 </select>
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="nacionalidad">Nacionalidad</label>
+                <label htmlFor="pais">País</label>
                 <input
                   type="text"
-                  id="nacionalidad"
-                  name="nacionalidad"
-                  value={formData.nacionalidad}
+                  id="pais"
+                  name="pais"
+                  value={formData.pais}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="puntos">Puntos</label>
+                <input
+                  type="number"
+                  id="puntos"
+                  name="puntos"
+                  value={formData.puntos}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="campeonatos">Campeonatos</label>
+                <input
+                  type="number"
+                  id="campeonatos"
+                  name="campeonatos"
+                  value={formData.campeonatos}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="podios">Podios</label>
+                <input
+                  type="number"
+                  id="podios"
+                  name="podios"
+                  value={formData.podios}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">  
+                <label htmlFor="victorias">Victorias</label>
+                <input
+                  type="number"
+                  id="victorias"
+                  name="victorias"
+                  value={formData.victorias}
                   onChange={handleChange}
                   required
                 />
@@ -243,9 +282,13 @@ const AdminPilotos = () => {
                 pilotos.map(piloto => (
                   <div key={piloto.id} className="admin-item">
                     <div className="admin-item-info">
-                      <p><strong>{piloto.nombre} {piloto.apellido}</strong> - #{piloto.numero}</p>
-                      <p>Equipo: {equipos.find(e => e.id === piloto.equipoId)?.nombre || 'No asignado'}</p>
-                      <p>Nacionalidad: {piloto.nacionalidad}</p>
+                      <p><strong>{piloto.nombre}</strong> - #{piloto.numero}</p>
+                      <p>Equipo: {equipos.find(e => Number(e.id) === Number(piloto.equipoId))?.nombre || 'No asignado'}</p>
+                      <p>País: {piloto.pais}</p>
+                      <p>Puntos: {piloto.puntos}</p>
+                      <p>Campeonatos: {piloto.campeonatos}</p>
+                      <p>Podios: {piloto.podios}</p>
+                      <p>Victorias: {piloto.victorias}</p>
                     </div>
                     <div className="admin-item-actions">
                       <button 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { apiService } from '../../../../config/api';
 import AdminHeader from '../AdminHeader';
+
 
 const AdminEquipos = () => {
   const [equipos, setEquipos] = useState([]);
@@ -42,27 +44,15 @@ const AdminEquipos = () => {
     e.preventDefault();
     
     try {
-      const url = editMode 
-        ? `/api/equipos/${currentId}` 
-        : '/api/equipos';
+      let response;
       
-      const method = editMode ? 'PUT' : 'POST';
+      if (editMode) {
+        response = await apiService.actualizarEquipo(currentId, formData);
+      } else {
+        response = await apiService.crearEquipo(formData);
+      }
       
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) throw new Error('Error al guardar equipo');
-      
-      // Actualizar la lista de equipos
       fetchEquipos();
-      
-      // Resetear el formulario
       resetForm();
     } catch (err) {
       setError(err.message);
@@ -85,16 +75,7 @@ const AdminEquipos = () => {
     if (!window.confirm('¿Estás seguro de eliminar este equipo?')) return;
     
     try {
-      const response = await fetch(`/api/equipos/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        }
-      });
-
-      if (!response.ok) throw new Error('Error al eliminar equipo');
-      
-      // Actualizar la lista de equipos
+      await apiService.eliminarEquipo(id);
       fetchEquipos();
     } catch (err) {
       setError(err.message);

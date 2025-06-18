@@ -15,7 +15,12 @@ export const API_ENDPOINTS = {
   
   // Pilotos y Equipos
   pilotos: `${API_BASE_URL}/pilotos`,
+  adminPilotos: `${API_BASE_URL}/admin/pilotos`,
+  adminPilotosById: (id) => `${API_BASE_URL}/admin/pilotos/${id}`,
+  
   equipos: `${API_BASE_URL}/equipos`,
+  adminEquipos: `${API_BASE_URL}/admin/equipos`,
+  adminEquiposById: (id) => `${API_BASE_URL}/admin/equipos/${id}`,
   
   // Calendario
   calendario: `${API_BASE_URL}/calendario`,
@@ -102,9 +107,83 @@ export const apiService = {
     return response.json();
   },
 
+  crearPiloto: async (pilotoData) => {
+    const response = await fetch(API_ENDPOINTS.adminPilotos, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(pilotoData)
+    });
+    if (!response.ok) throw new Error('Error al crear piloto');
+    return response.json();
+  },
+  
+  actualizarPiloto: async (id, pilotoData) => {
+    const response = await fetch(API_ENDPOINTS.adminPilotosById(id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(pilotoData)
+    });
+    if (!response.ok) throw new Error('Error al actualizar piloto');
+    return response.json();
+  },
+  
+  eliminarPiloto: async (id) => {
+    const response = await fetch(API_ENDPOINTS.adminPilotosById(id), {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al eliminar piloto');
+    return response.json();
+  },
+
   obtenerEquipos: async () => {
     const response = await fetch(API_ENDPOINTS.equipos);
     if (!response.ok) throw new Error('Error al obtener equipos');
+    return response.json();
+  },
+  
+  crearEquipo: async (equipoData) => {
+    const response = await fetch(API_ENDPOINTS.adminEquipos, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(equipoData)
+    });
+    if (!response.ok) throw new Error('Error al crear equipo');
+    return response.json();
+  },
+  
+  actualizarEquipo: async (id, equipoData) => {
+    const response = await fetch(API_ENDPOINTS.adminEquiposById(id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(equipoData)
+    });
+    if (!response.ok) throw new Error('Error al actualizar equipo');
+    return response.json();
+  },
+  
+  eliminarEquipo: async (id) => {
+    const response = await fetch(API_ENDPOINTS.adminEquiposById(id), {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al eliminar equipo');
     return response.json();
   },
 

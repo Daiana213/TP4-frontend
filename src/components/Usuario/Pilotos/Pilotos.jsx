@@ -13,10 +13,6 @@ function Pilotos() {
     const fetchPilotos = async () => {
       try {
         const data = await apiService.obtenerPilotos();
-
-        // Ordenar y "aplanar" el array: pilotos ordenados por equipo
-        // Suponemos que los pilotos ya vienen con propiedad Equipo.Nombre
-        // Ordenamos por equipo para mantener agrupación lógica (opcional)
         data.sort((a, b) => {
           if (a.Equipo?.Nombre < b.Equipo?.Nombre) return -1;
           if (a.Equipo?.Nombre > b.Equipo?.Nombre) return 1;
