@@ -1,0 +1,172 @@
+/* Estilos para AdminCalendario.jsx */
+
+.admin-container {
+    font-family: var(--font-primary);
+    padding: var(--spacing-md);
+    background-color: var(--gray-light);
+    min-height: 100vh;
+  }
+  
+  .titulo {
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .admin-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .admin-form-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-md);
+  }
+  
+  .admin-form-container h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-color);
+  }
+  
+  .admin-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+  
+  .admin-form {
+    background-color: var(--gray-light);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm);
+    box-shadow: var(--shadow);
+  }
+  
+  .admin-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .admin-form .form-group label {
+    font-size: var(--font-size-sm);
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+  }
+  
+  .admin-form .form-group input {
+    padding: var(--spacing-xs);
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-base);
+  }
+  
+  .admin-form .form-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+  
+  .submit-btn,
+  .cancel-btn,
+  .edit-btn,
+  .delete-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-primary);
+  }
+  
+  .submit-btn {
+    background: var(--gradient);
+    color: var(--white);
+  }
+  
+  .cancel-btn {
+    background-color: var(--gray);
+    color: var(--white);
+  }
+  
+  .edit-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+  }
+  
+  .delete-btn {
+    background-color: var(--accent-color);
+    color: var(--white);
+  }
+  
+  .submit-btn:hover,
+  .cancel-btn:hover,
+  .edit-btn:hover,
+  .delete-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .admin-list-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-md);
+  }
+  
+  .admin-list-container h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-color);
+  }
+  
+  .admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .admin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray-light);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow);
+  }
+  
+  .admin-item-info p {
+    margin: 0.25rem 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+  }
+  
+  .admin-item-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    color: var(--text-light);
+    margin-top: var(--spacing-lg);
+  }
+  
+  @media (min-width: 768px) {
+    .admin-content {
+      flex-direction: column;
+    }
+  
+    .admin-form-container,
+    .admin-list-container {
+      width: 100%;
+    }
+  }
