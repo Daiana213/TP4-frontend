@@ -1,85 +1,40 @@
 .entradas-container {
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.titulo-entradas {
-  font-family: var(--font-primary);
-  padding-top: 1.5rem;
-  padding-left: 1.5rem;
-  text-align: center;
-  color: var(--secondary-color);
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-shadow: 2px 2px 5px white;
-}
-
-.nueva-entrada-container {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 2rem;
+  padding: 1rem;
+  max-width: 900px;
+  margin: auto;
 }
 
 .nueva-entrada-btn {
-  background-color: var(--primary-color);
+  background-color: #d9534f;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-family: var(--font-primary);
-  font-weight: 600;
-  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-.nueva-entrada-btn:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-}
-
-.entradas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  box-sizing: border-box;
+.formulario-entrada input,
+.formulario-entrada textarea,
+.formulario-entrada select {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
 }
 
 .entrada-card {
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.entrada-card:hover {
-  transform: translateY(-5px);
-}
-
-.entrada-card h2 {
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-}
-
-.entrada-card .fecha {
-  color: #666;
-  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
   margin-bottom: 1rem;
+  background-color: white;
 }
 
-.entrada-card .formato {
-  color: var(--secondary-color);
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.entrada-card .resumen {
-  margin-bottom: 1rem;
-}
-
-.entrada-card .notas {
-  font-style: italic;
-  color: #666;
+.eliminar-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
 }

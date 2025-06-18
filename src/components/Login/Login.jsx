@@ -9,38 +9,20 @@ import './Login.css';
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [formData, setFormData] = useState({
-    email: '',
-    contrasena: ''
-  });
-
+  const [formData, setFormData] = useState({ email: '', contrasena: '' });
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
+    const formErrors = {};
 
-    // Validación del lado del cliente
-    let formErrors = {};
-    if (!formData.email) {
-      formErrors.email = 'El email es requerido';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      formErrors.email = 'Formato de email inválido';
-    }
-
-    if (!formData.contrasena) {
-      formErrors.contrasena = 'La contraseña es requerida';
-    } else if (formData.contrasena.length < 6) {
-      formErrors.contrasena = 'La contraseña debe tener al menos 6 caracteres';
-    }
+    if (!formData.email.trim()) formErrors.email = 'El email es obligatorio';
+    if (!formData.contrasena.trim()) formErrors.contrasena = 'La contraseña es obligatoria';
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -50,39 +32,29 @@ const Login = () => {
     try {
       const response = await fetch(API_ENDPOINTS.login, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          contrasena: formData.contrasena
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
+      console.log('Respuesta login:', data);
 
       if (!response.ok) {
         setErrors({ general: data.error || 'Error en el inicio de sesión' });
         return;
       }
 
-      if (!data.usuario) {
-        setErrors({ general: 'Error al obtener datos del usuario' });
+      if (!data.token || !data.usuario) {
+        setErrors({ general: 'Respuesta inválida del servidor' });
         return;
       }
 
-      // Usar el método login del contexto
       login(data.usuario, data.token);
+      localStorage.setItem('token', data.token);
 
-      // Redirigir según el rol del usuario
-      if (data.usuario.isAdmin) {
-        navigate('/admin'); 
-      } else {
-        login(data.usuario, data.token);
-        navigate('/inicio');
-      }
-    } catch (error) {
+      navigate(data.usuario.isAdmin ? '/admin' : '/inicio');
+    } catch (err) {
+      console.error('Error en login:', err);
       setErrors({ general: 'Error al conectar con el servidor' });
     }
   };
@@ -93,16 +65,13 @@ const Login = () => {
       <div className="login-form">
         <h2>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit}>
-          {errors.general && (
-            <div className="error-message general">{errors.general}</div>
-          )}
+          {errors.general && <div className="error-message general">{errors.general}</div>}
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
-              id="email"
               name="email"
-              value={formData.email || ''}
+              value={formData.email}
               onChange={handleChange}
               className={errors.email ? 'error' : ''}
             />
@@ -113,9 +82,8 @@ const Login = () => {
             <label htmlFor="contrasena">Contraseña</label>
             <input
               type="password"
-              id="contrasena"
               name="contrasena"
-              value={formData.contrasena || ''}
+              value={formData.contrasena}
               onChange={handleChange}
               className={errors.contrasena ? 'error' : ''}
             />

@@ -7,6 +7,9 @@ import Pilotos from './components/Usuario/Pilotos/Pilotos';
 import Equipos from './components/Usuario/Equipos/Equipos';
 import Calendario from './components/Usuario/Calendario/Calendario';
 import Entradas from './components/Usuario/Entradas/Entradas';
+import NuevaEntrada from './components/Usuario/Entradas/NuevaEntrada'; 
+import DetalleEntrada from './components/Usuario/Entradas/DetalleEntrada';
+import EditarEntrada from './components/Usuario/Entradas/EditarEntrada';
 import Admin from './components/Admin/Admin';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
@@ -27,6 +30,9 @@ function App() {
           <Route path="/calendario" element={<ProtectedRoute><Calendario /></ProtectedRoute>} />
           <Route path="/entradas" element={<ProtectedRoute><Entradas /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+          <Route path="/nuevaentrada" element={<ProtectedRoute><NuevaEntrada /></ProtectedRoute>} />
+          <Route path="/entradas/:id" element={<ProtectedRoute><DetalleEntrada /></ProtectedRoute>} />
+          <Route path="/entradas/:id/editar" element={<ProtectedRoute><EditarEntrada /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </Router>

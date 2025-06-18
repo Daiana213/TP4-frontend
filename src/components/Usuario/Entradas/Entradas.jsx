@@ -1,59 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../../Header/UserHeader';
-import Footer from '../../Footer/Footer';
-import { apiService } from '../../../../config/api';
-import { useAuth } from '../../../context/AuthContext';
-import './Entradas.css';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Entradas() {
+const Entradas = () => {
   const [entradas, setEntradas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { user } = useAuth();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEntradas = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('No hay token. Por favor iniciá sesión.');
+        return;
+      }
+
       try {
-        const response = await fetch('http://localhost:3001/diario');
+        const response = await fetch('http://localhost:3001/api/entradas', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error('No autorizado. Iniciá sesión nuevamente.');
+          } else {
+            throw new Error('Error al obtener las entradas.');
+          }
+        }
+
         const data = await response.json();
         setEntradas(data);
-        setLoading(false);
       } catch (err) {
-        setError('Error al cargar las entradas');
-        setLoading(false);
+        setError(err.message);
+        console.error('Error al obtener entradas:', err.message);
       }
     };
 
     fetchEntradas();
   }, []);
 
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div className="entradas-container">
-      <Header />
-      <h1 className="titulo-entradas">Mis Entradas</h1>
-      
-      <div className="nueva-entrada-container">
-        <button className="nueva-entrada-btn">Nueva Entrada</button>
-      </div>
-
-      <div className="entradas-grid">
-        {entradas.map((entrada) => (
-          <div key={entrada.id} className="entrada-card">
-            <h2>{entrada.Titulo}</h2>
-            <p className="fecha">{new Date(entrada.fechacreacion).toLocaleDateString('es-ES')}</p>
-            <p className="formato">Formato: {entrada.formatoId === 1 ? 'CARRERA' : entrada.formatoId === 2 ? 'CLASIFICACIÓN' : 'SPRINT'}</p>
-            <p className="resumen">{entrada.resumengeneral}</p>
-            <p className="notas">{entrada.notaspersonales}</p>
-          </div>
-        ))}
-      </div>
-      
-      <Footer />
+    <div>
+      <h2>Listado de Entradas</h2>
+      <button onClick={() => navigate('/nuevaentrada')}>
+        Crear Nueva Entrada
+      </button>
+      {entradas.length === 0 ? (
+        <p>No hay entradas disponibles.</p>
+      ) : (
+        <ul>
+          {entradas.map((entrada) => (
+            <li key={entrada.id}>
+              {entrada.Titulo} - {entrada.GranPremio?.nombre || 'Sin Gran Premio'}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-}
+};
 
 export default Entradas;

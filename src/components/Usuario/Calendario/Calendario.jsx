@@ -48,6 +48,7 @@ function Calendario() {
             <div key={granPremio.id} className="granpremio-card">
               <h2>{granPremio.nombre}</h2>
               <div className="granpremio-info">
+                <p><strong>Ronda:</strong> {granPremio.id}</p>
                 <p><strong>Fecha:</strong> {formatearFecha(granPremio.fecha)}</p>
                 <p><strong>Circuito:</strong> {granPremio.circuito}</p>
                 <p><strong>País:</strong> {granPremio.pais}</p>
