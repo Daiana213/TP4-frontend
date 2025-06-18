@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../Header/UserHeader';
+import Footer from '../../Footer/Footer';
+import './NuevaEntrada.css'; 
 
 export default function NuevaEntrada() {
   const [titulo, setTitulo] = useState('');
   const [granPremioId, setGranPremioId] = useState('');
-  const [formatoId, setFormatoId] = useState('');
   const [resumen, setResumen] = useState('');
   const [notasPersonales, setNotasPersonales] = useState('');
   const [fecha, setFecha] = useState('');
@@ -25,7 +27,6 @@ export default function NuevaEntrada() {
         body: JSON.stringify({
           Titulo: titulo,
           GranPremioId: parseInt(granPremioId),
-          formatoId: parseInt(formatoId),
           resumen,
           notasPersonales,
           fecha,
@@ -34,7 +35,7 @@ export default function NuevaEntrada() {
 
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error);
+        throw new Error(err.error || 'Error al crear entrada');
       }
 
       navigate('/entradas');
@@ -44,16 +45,16 @@ export default function NuevaEntrada() {
   };
 
   return (
+    <div className="Nueva-conteiner">
+      <Header />
     <form onSubmit={handleSubmit}>
       <h2>Nueva entrada</h2>
+
       <label>Título:</label>
       <input value={titulo} onChange={e => setTitulo(e.target.value)} required />
 
       <label>Gran Premio ID:</label>
       <input value={granPremioId} onChange={e => setGranPremioId(e.target.value)} required type="number" />
-
-      <label>Formato ID:</label>
-      <input value={formatoId} onChange={e => setFormatoId(e.target.value)} required type="number" />
 
       <label>Fecha:</label>
       <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} required />
@@ -67,5 +68,7 @@ export default function NuevaEntrada() {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <button type="submit">Crear</button>
     </form>
+    <Footer />
+    </div>
   );
 }

@@ -1,40 +1,96 @@
-.entradas-container {
-  padding: 1rem;
-  max-width: 900px;
-  margin: auto;
+/* Entradas.css */
+
+.Entrada-conteiner {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url('../../assets/fondo-f1.webp'); /* o la ruta correcta */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--white);
+  font-family: var(--font-primary);
 }
 
-.nueva-entrada-btn {
-  background-color: #d9534f;
-  color: white;
+
+main {
+  flex-grow: 1;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tituloentradas{
+  font-family: var(--font-primary);
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  text-align: center;
+  color: var(--secondary-color);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 5px white;
+
+}
+
+.boton-crear {
+  margin: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--primary-color);
+  color: var(--white);
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
-  margin-bottom: 1rem;
+  transition: var(--transition);
+  font-weight: bold;
 }
 
-.formulario-entrada input,
-.formulario-entrada textarea,
-.formulario-entrada select {
-  display: block;
+.boton-crear:hover {
+  background: var(--accent-color);
+}
+
+.grid-entradas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
   width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  max-width: 1200px;
+  margin-top: var(--spacing-md);
 }
 
 .entrada-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background-color: white;
+  background-color: var(--gray-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.eliminar-btn {
-  background-color: #dc3545;
-  color: white;
+.entrada-card h3 {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-xl);
+  color: var(--text-color);
+}
+
+.entrada-card p {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-light);
+}
+
+.boton-detalle {
+  align-self: flex-end;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--secondary-color);
+  color: var(--white);
   border: none;
-  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.boton-detalle:hover {
+  background: var(--primary-color);
 }

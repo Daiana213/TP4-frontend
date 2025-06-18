@@ -1,0 +1,59 @@
+.editar-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f2;
+}
+
+.editar-form {
+  flex: 1;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.editar-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.editar-form input,
+.editar-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.editar-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn-guardar {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #45a049;
+}
+
+.error-text {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+}

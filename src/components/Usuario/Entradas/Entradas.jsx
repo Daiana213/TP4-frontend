@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../Header/UserHeader';
+import Footer from '../../Footer/Footer';
+import './Entradas.css';
 
 const Entradas = () => {
   const [entradas, setEntradas] = useState([]);
@@ -18,49 +21,53 @@ const Entradas = () => {
       try {
         const response = await fetch('http://localhost:3001/api/entradas', {
           headers: {
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           }
         });
 
         if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error('No autorizado. Iniciá sesión nuevamente.');
-          } else {
-            throw new Error('Error al obtener las entradas.');
-          }
+          throw new Error('Error al obtener las entradas.');
         }
 
         const data = await response.json();
+        console.log('Entrada recibida:', data);
         setEntradas(data);
       } catch (err) {
         setError(err.message);
-        console.error('Error al obtener entradas:', err.message);
       }
     };
 
     fetchEntradas();
   }, []);
 
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
-
   return (
-    <div>
-      <h2>Listado de Entradas</h2>
-      <button onClick={() => navigate('/nuevaentrada')}>
-        Crear Nueva Entrada
-      </button>
-      {entradas.length === 0 ? (
-        <p>No hay entradas disponibles.</p>
-      ) : (
-        <ul>
-          {entradas.map((entrada) => (
-            <li key={entrada.id}>
-              {entrada.Titulo} - {entrada.GranPremio?.nombre || 'Sin Gran Premio'}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="Entrada-conteiner">
+      <Header />
+      <main>
+        <h2 className="tituloentradas">Listado de Entradas</h2>
+        <button className="boton-crear" onClick={() => navigate('/nuevaentrada')}>
+          Crear Nueva Entrada
+        </button>
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        {entradas.length === 0 ? (
+          <p>No hay entradas disponibles.</p>
+        ) : (
+          <div className="grid-entradas">
+            {entradas.map((entrada) => (
+              <div className="entrada-card" key={entrada.id}>
+                <h3>{entrada.Titulo}</h3>
+                <p>Gran Premio #{entrada.GranPremioId}</p>
+                <button className="boton-detalle" onClick={() => navigate(`/detalleentrada/${entrada.id}`)}>
+                  Ver Detalle
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
+      <Footer />
     </div>
   );
 };
