@@ -14,8 +14,8 @@ export const API_ENDPOINTS = {
   diarioById: (id) => `${API_BASE_URL}/diario/${id}`,
 
   // Entradas (nuevo)
-  entradas: `${API_BASE_URL}/entradas`,
-  entradaById: (id) => `${API_BASE_URL}/entradas/${id}`,
+  entradas: `${API_BASE_URL}/api/entradas`,
+  entradaById: (id) => `${API_BASE_URL}/api/entradas/${id}`,
 
   // Pilotos y Equipos
   pilotos: `${API_BASE_URL}/pilotos`,
@@ -74,38 +74,6 @@ export const apiService = {
     return response.json();
   },
 
-  // Diario
-  crearEntrada: async (entradaData) => {
-    const response = await fetch(API_ENDPOINTS.diario, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entradaData)
-    });
-    if (!response.ok) throw new Error('Error al crear entrada');
-    return response.json();
-  },
-
-  obtenerEntrada: async (id) => {
-    const response = await fetch(API_ENDPOINTS.diarioById(id));
-    if (!response.ok) throw new Error('Error al obtener entrada');
-    return response.json();
-  },
-
-  actualizarEntrada: async (id, entradaData) => {
-    const response = await fetch(API_ENDPOINTS.diarioById(id), {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entradaData)
-    });
-    if (!response.ok) throw new Error('Error al actualizar entrada');
-    return response.json();
-  },
-
-  // Entradas del Diario del Usuario (EntradaGPUsuario)
   obtenerEntradas: async () => {
     const token = localStorage.getItem('token');
     const response = await fetch(API_ENDPOINTS.entradas, {

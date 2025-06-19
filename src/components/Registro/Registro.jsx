@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { API_ENDPOINTS } from '../../../config/api';
+import { apiService } from '../../../config/api';
 import './Registro.css';
 
 export const Registro = () => {
@@ -57,25 +58,11 @@ export const Registro = () => {
     
     if (Object.keys(errores).length === 0) {
       try {
-        const response = await fetch(API_ENDPOINTS.registro, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            nombre: formData.nombreCompleto, // Cambiar nombreCompleto a nombre
-            email: formData.email,
-            contrasena: formData.password // Asegurar que coincida con el backend
-          })
+        await apiService.registro({
+          nombre: formData.nombreCompleto,
+          email: formData.email,
+          contrasena: formData.password
         });
-  
-        const data = await response.json();
-  
-        if (!response.ok) {
-          setErrors({ general: data.error || 'Error en el registro' });
-          return;
-        }
-  
         alert('Registro exitoso. Por favor, inicia sesión.');
         navigate('/login');
       } catch (error) {

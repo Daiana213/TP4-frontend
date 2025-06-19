@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import { API_ENDPOINTS } from '../../../config/api';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
+import { apiService } from '../../../config/api';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,28 +31,13 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch(API_ENDPOINTS.login, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      console.log('Respuesta login:', data);
-
-      if (!response.ok) {
-        setErrors({ general: data.error || 'Error en el inicio de sesión' });
-        return;
-      }
-
+      const data = await apiService.login(formData);
       if (!data.token || !data.usuario) {
         setErrors({ general: 'Respuesta inválida del servidor' });
         return;
       }
-
       login(data.usuario, data.token);
       localStorage.setItem('token', data.token);
-
       navigate(data.usuario.isAdmin ? '/admin' : '/inicio');
     } catch (err) {
       console.error('Error en login:', err);

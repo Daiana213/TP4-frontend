@@ -2,31 +2,41 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
+import StandingsForm from './StandingsForm';
 import './EditarEntrada.css';
+import { apiService } from '../../../../config/api';
 
 export default function EditarEntrada() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [entrada, setEntrada] = useState(null);
+  const [standingsData, setStandingsData] = useState({
+    clasificacion: [],
+    sprint: [],
+    carrera: []
+  });
   const [error, setError] = useState(null);
-
-  // Para el select formato manejamos directamente en el objeto entrada
-  // pero podés usar un estado separado si preferís
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [tieneSprint, setTieneSprint] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/entradas/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Error al obtener la entrada');
-        return res.json();
-      })
+    apiService.obtenerEntradaPorId(id)
       .then(data => {
         setEntrada(data);
+        setTieneSprint(data.tieneSprint || false);
+        const standings = {
+          clasificacion: data.Clasificacion?.standings || [],
+          sprint: data.Sprint?.standings || [],
+          carrera: data.Carrera?.standings || []
+        };
+        setStandingsData(standings);
+        setLoading(false);
       })
-      .catch(err => setError(err.message));
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
   }, [id]);
 
   const handleChange = (e) => {
@@ -34,84 +44,172 @@ export default function EditarEntrada() {
     setEntrada(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleStandingsChange = (newStandings) => {
+    setStandingsData(newStandings);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError(null);
+    setSaving(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/entradas/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({
-          Titulo: entrada.Titulo,
-          GranPremioId: parseInt(entrada.GranPremioId, 10),
-          resumengeneral: entrada.resumengeneral,
-          notaspersonales: entrada.notaspersonales,
-          fechacreacion: entrada.fechacreacion,
-        }),
+      await apiService.actualizarEntradaUsuario(id, {
+        Titulo: entrada.Titulo,
+        GranPremioId: parseInt(entrada.GranPremioId, 10),
+        resumengeneral: entrada.resumengeneral,
+        notaspersonales: entrada.notaspersonales,
+        fechacreacion: entrada.fechacreacion,
+        tieneSprint,
+        clasificacionStandings: standingsData.clasificacion.filter(item => item.piloto),
+        sprintStandings: tieneSprint ? standingsData.sprint.filter(item => item.piloto) : [],
+        carreraStandings: standingsData.carrera.filter(item => item.piloto)
       });
-
-      if (!res.ok) throw new Error('Error al actualizar');
-
-      navigate('/entradas'); // redirige al listado
+      navigate('/entradas');
     } catch (err) {
       setError(err.message);
+      setSaving(false);
     }
   };
 
-  if (!entrada) return <p>Cargando...</p>;
+  if (loading) {
+    return (
+      <div className="editar-container">
+        <Header />
+        <main className="editar-content">
+          <div className="loading-container">
+            <p>Cargando entrada...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!entrada) {
+    return (
+      <div className="editar-container">
+        <Header />
+        <main className="editar-content">
+          <p className="error-text">Entrada no encontrada</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="editar-container">
       <Header />
-      <form onSubmit={handleSubmit} className="editar-form">
-        <h2>Editar entrada</h2>
+      <main className="editar-content">
+        <h2>Editar Entrada del Gran Premio</h2>
+        
+        <form onSubmit={handleSubmit} className="editar-form">
+          <div className="form-section">
+            <h3>Información General</h3>
+            
+            <div className="form-group">
+              <label htmlFor="titulo">Título de la Entrada:</label>
+              <input
+                id="titulo"
+                name="Titulo"
+                type="text"
+                value={entrada.Titulo}
+                onChange={handleChange}
+                placeholder="Ej: Gran Premio de Mónaco - Análisis completo"
+                required
+              />
+            </div>
 
-        <input
-          name="Titulo"
-          value={entrada.Titulo}
-          onChange={handleChange}
-          placeholder="Título"
-          required
-        />
+            <div className="form-group">
+              <label htmlFor="granPremioId">Gran Premio ID:</label>
+              <input
+                id="granPremioId"
+                name="GranPremioId"
+                type="number"
+                value={entrada.GranPremioId}
+                onChange={handleChange}
+                placeholder="Ej: 1"
+                required
+              />
+            </div>
 
-        <input
-          name="GranPremioId"
-          value={entrada.GranPremioId}
-          type="number"
-          onChange={handleChange}
-          placeholder="ID del Gran Premio"
-          required
-        />
+            <div className="form-group">
+              <label htmlFor="fecha">Fecha del Gran Premio:</label>
+              <input
+                id="fecha"
+                name="fechacreacion"
+                type="date"
+                value={entrada.fechacreacion}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <input
-          name="fechacreacion"
-          type="date"
-          value={entrada.fechacreacion}
-          onChange={handleChange}
-          required
-        />
+            <div className="form-group">
+              <label htmlFor="tieneSprint">¿Este GP tiene Sprint?</label>
+              <input
+                id="tieneSprint"
+                type="checkbox"
+                checked={tieneSprint}
+                onChange={e => setTieneSprint(e.target.checked)}
+              />
+            </div>
+          </div>
 
-        <textarea
-          name="resumengeneral"
-          value={entrada.resumengeneral}
-          onChange={handleChange}
-          placeholder="Resumen general"
-        />
+          <div className="form-section">
+            <h3>Análisis Personal</h3>
+            
+            <div className="form-group">
+              <label htmlFor="resumen">Resumen General:</label>
+              <textarea
+                id="resumen"
+                name="resumengeneral"
+                value={entrada.resumengeneral}
+                onChange={handleChange}
+                placeholder="Describe los momentos más importantes del Gran Premio..."
+                rows="4"
+              />
+            </div>
 
-        <textarea
-          name="notaspersonales"
-          value={entrada.notaspersonales}
-          onChange={handleChange}
-          placeholder="Notas personales"
-        />
+            <div className="form-group">
+              <label htmlFor="notasPersonales">Notas Personales:</label>
+              <textarea
+                id="notasPersonales"
+                name="notaspersonales"
+                value={entrada.notaspersonales}
+                onChange={handleChange}
+                placeholder="Tus impresiones personales, sorpresas, decepciones..."
+                rows="4"
+              />
+            </div>
+          </div>
 
-        {error && <p className="error-text">{error}</p>}
+          <StandingsForm 
+            onStandingsChange={handleStandingsChange}
+            initialData={standingsData}
+            mostrarSprint={tieneSprint}
+          />
 
-        <button type="submit" className="btn-guardar">Guardar cambios</button>
-      </form>
+          {error && <p className="error-message">{error}</p>}
+          
+          <div className="form-actions">
+            <button 
+              type="button" 
+              onClick={() => navigate('/entradas')}
+              className="btn-cancelar"
+            >
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              className="btn-guardar"
+              disabled={saving}
+            >
+              {saving ? 'Guardando...' : 'Guardar Cambios'}
+            </button>
+          </div>
+        </form>
+      </main>
       <Footer />
     </div>
   );
