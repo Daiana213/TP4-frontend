@@ -4,30 +4,35 @@ export const API_ENDPOINTS = {
   // Usuarios
   login: `${API_BASE_URL}/usuarios/login`,
   registro: `${API_BASE_URL}/usuarios/registro`,
-  
+
   // Carreras
   carreras: `${API_BASE_URL}/carreras`,
   carreraById: (id) => `${API_BASE_URL}/carreras/${id}`,
-  
+
   // Diario
   diario: `${API_BASE_URL}/diario`,
   diarioById: (id) => `${API_BASE_URL}/diario/${id}`,
-  
+
+  // Entradas (nuevo)
+  entradas: `${API_BASE_URL}/entradas`,
+  entradaById: (id) => `${API_BASE_URL}/entradas/${id}`,
+
   // Pilotos y Equipos
   pilotos: `${API_BASE_URL}/pilotos`,
   adminPilotos: `${API_BASE_URL}/admin/pilotos`,
   adminPilotosById: (id) => `${API_BASE_URL}/admin/pilotos/${id}`,
   
   equipos: `${API_BASE_URL}/equipos`,
+
   adminEquipos: `${API_BASE_URL}/admin/equipos`,
   adminEquiposById: (id) => `${API_BASE_URL}/admin/equipos/${id}`,
-  
   // Calendario
   calendario: `${API_BASE_URL}/calendario`,
   calendarioById: (id) => `${API_BASE_URL}/calendario/${id}`,
   adminCalendario: `${API_BASE_URL}/admin/calendario`,
   adminCalendarioById: (id) => `${API_BASE_URL}/admin/calendario/${id}`
 };
+
 
 // Funciones de servicio para las llamadas API
 export const apiService = {
@@ -97,6 +102,69 @@ export const apiService = {
       body: JSON.stringify(entradaData)
     });
     if (!response.ok) throw new Error('Error al actualizar entrada');
+    return response.json();
+  },
+
+  // Entradas del Diario del Usuario (EntradaGPUsuario)
+  obtenerEntradas: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradas, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al obtener entradas');
+    return response.json();
+  },
+
+  obtenerEntradaPorId: async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradaById(id), {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al obtener la entrada');
+    return response.json();
+  },
+
+  crearEntradaUsuario: async (entradaData) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradas, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(entradaData)
+    });
+    if (!response.ok) throw new Error('Error al crear entrada');
+    return response.json();
+  },
+
+  actualizarEntradaUsuario: async (id, entradaData) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradaById(id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(entradaData)
+    });
+    if (!response.ok) throw new Error('Error al actualizar entrada');
+    return response.json();
+  },
+
+  eliminarEntradaUsuario: async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradaById(id), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al eliminar entrada');
     return response.json();
   },
 

@@ -1,59 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
-import { apiService } from '../../../../config/api';
-import { useAuth } from '../../../context/AuthContext';
 import './Entradas.css';
 
-function Entradas() {
+const Entradas = () => {
   const [entradas, setEntradas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { user } = useAuth();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEntradas = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('No hay token. Por favor iniciá sesión.');
+        return;
+      }
+
       try {
-        const response = await fetch('http://localhost:3001/diario');
+        const response = await fetch('http://localhost:3001/api/entradas', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al obtener las entradas.');
+        }
+
         const data = await response.json();
+        console.log('Entrada recibida:', data);
         setEntradas(data);
-        setLoading(false);
       } catch (err) {
-        setError('Error al cargar las entradas');
-        setLoading(false);
+        setError(err.message);
       }
     };
 
     fetchEntradas();
   }, []);
 
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
-    <div className="entradas-container">
+    <div className="Entrada-conteiner">
       <Header />
-      <h1 className="titulo-entradas">Mis Entradas</h1>
-      
-      <div className="nueva-entrada-container">
-        <button className="nueva-entrada-btn">Nueva Entrada</button>
-      </div>
+      <main>
+        <h2 className="tituloentradas">Listado de Entradas</h2>
+        <button className="boton-crear" onClick={() => navigate('/nuevaentrada')}>
+          Crear Nueva Entrada
+        </button>
 
-      <div className="entradas-grid">
-        {entradas.map((entrada) => (
-          <div key={entrada.id} className="entrada-card">
-            <h2>{entrada.Titulo}</h2>
-            <p className="fecha">{new Date(entrada.fechacreacion).toLocaleDateString('es-ES')}</p>
-            <p className="formato">Formato: {entrada.formatoId === 1 ? 'CARRERA' : entrada.formatoId === 2 ? 'CLASIFICACIÓN' : 'SPRINT'}</p>
-            <p className="resumen">{entrada.resumengeneral}</p>
-            <p className="notas">{entrada.notaspersonales}</p>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        {entradas.length === 0 ? (
+          <p>No hay entradas disponibles.</p>
+        ) : (
+          <div className="grid-entradas">
+            {entradas.map((entrada) => (
+              <div className="entrada-card" key={entrada.id}>
+                <h3>{entrada.Titulo}</h3>
+                <p>Gran Premio #{entrada.GranPremioId}</p>
+                <button className="boton-detalle" onClick={() => navigate(`/detalleentrada/${entrada.id}`)}>
+                  Ver Detalle
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      
+        )}
+      </main>
       <Footer />
     </div>
   );
-}
+};
 
 export default Entradas;

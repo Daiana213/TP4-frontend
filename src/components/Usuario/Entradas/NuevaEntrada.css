@@ -1,0 +1,68 @@
+.Nueva-conteiner {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+  }
+  
+  .Nueva-conteiner form {
+    flex: 1;
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Nueva-conteiner form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #222;
+  }
+  
+  .Nueva-conteiner form label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .Nueva-conteiner form input,
+  .Nueva-conteiner form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .Nueva-conteiner form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .Nueva-conteiner form button[type="submit"] {
+    background-color: #2196F3;
+    color: white;
+    padding: 0.9rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .Nueva-conteiner form button:hover {
+    background-color: #1976d2;
+  }
+  
+  .Nueva-conteiner .error-text {
+    color: red;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  

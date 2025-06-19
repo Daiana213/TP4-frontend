@@ -13,24 +13,30 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar si hay un token guardado
     const token = localStorage.getItem('authToken');
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+  
+    // También podés usar JSON.parse si guardas objetos
     const userId = localStorage.getItem('userId');
     const userEmail = localStorage.getItem('userEmail');
     const userName = localStorage.getItem('userName');
     const userIsAdmin = localStorage.getItem('userIsAdmin') === 'true';
-
-    if (token && userId && userEmail && userName) {
+  
+    if (userId && userEmail && userName) {
       setCurrentUser({
         id: userId,
         email: userEmail,
-        nombre: userName
+        nombre: userName,
       });
       setIsAuthenticated(true);
       setIsAdmin(userIsAdmin);
     }
     setLoading(false);
   }, []);
+  
 
   const login = (userData, token) => {
     localStorage.setItem('authToken', token);

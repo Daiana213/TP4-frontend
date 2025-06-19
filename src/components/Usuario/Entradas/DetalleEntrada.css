@@ -1,0 +1,71 @@
+/* src/pages/Entradas/DetalleEntrada.css */
+.detalle-entrada-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: url('/assets/f1-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: var(--font-primary);
+    color: var(--white);
+  }
+  
+  .detalle-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+    background-color: rgba(21, 21, 30, 0.9);
+    margin: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+  }
+  
+  .entrada-info p {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .detalle-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+  }
+  
+  .btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .btn.editar {
+    background-color: var(--primary-color);
+    color: var(--white);
+  }
+  
+  .btn.eliminar {
+    background-color: #aa0000;
+    color: var(--white);
+  }
+  
+  .btn.volver {
+    background-color: var(--gray-light);
+    color: var(--text-color);
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .error-text {
+    color: red;
+    padding: var(--spacing-sm);
+  }
+  
+  .loading-text {
+    color: var(--white);
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-md);
+  }
+  
