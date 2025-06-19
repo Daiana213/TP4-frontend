@@ -101,7 +101,7 @@
   .info-section p {
     font-size: var(--font-size-base);
     line-height: 1.6;
-    color: var(--white);
+    color: var(--secondary-color);
     margin: 0;
   }
   

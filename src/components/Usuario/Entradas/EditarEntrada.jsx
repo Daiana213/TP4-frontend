@@ -10,38 +10,61 @@ export default function EditarEntrada() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [entrada, setEntrada] = useState(null);
-  const [standingsData, setStandingsData] = useState({
-    clasificacion: [],
-    sprint: [],
-    carrera: []
-  });
+  const [standingsData, setStandingsData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [tieneSprint, setTieneSprint] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     apiService.obtenerEntradaPorId(id)
       .then(data => {
-        setEntrada(data);
-        setTieneSprint(data.tieneSprint || false);
-        const standings = {
-          clasificacion: data.Clasificacion?.standings || [],
-          sprint: data.Sprint?.standings || [],
-          carrera: data.Carrera?.standings || []
-        };
-        setStandingsData(standings);
-        setLoading(false);
+        if (isMounted) {
+          setEntrada({
+            ...data,
+            fechacreacion: data.fechacreacion
+              ? data.fechacreacion.slice(0, 10)
+              : new Date().toISOString().slice(0, 10)
+          });
+
+          setTieneSprint(data.tieneSprint || false);
+
+          setStandingsData({
+            clasificacion: data.Clasificacion?.standings || [],
+            sprint: data.Sprint?.standings || [],
+            carrera: data.Carrera?.standings || []
+          });
+
+          setLoading(false);
+        }
       })
       .catch(err => {
-        setError(err.message);
-        setLoading(false);
+        if (isMounted) {
+          setError(err.message);
+          setLoading(false);
+        }
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEntrada(prev => ({ ...prev, [name]: value }));
+    if (!entrada) return;
+
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      if (name === 'tieneSprint') {
+        setTieneSprint(checked);
+      } else {
+        setEntrada(prev => ({ ...prev, [name]: checked }));
+      }
+    } else {
+      setEntrada(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleStandingsChange = (newStandings) => {
@@ -50,6 +73,8 @@ export default function EditarEntrada() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!entrada || !standingsData) return;
+
     setError(null);
     setSaving(true);
     try {
@@ -85,12 +110,15 @@ export default function EditarEntrada() {
     );
   }
 
-  if (!entrada) {
+  if (!entrada || !standingsData) {
     return (
       <div className="editar-container">
         <Header />
         <main className="editar-content">
           <p className="error-text">Entrada no encontrada</p>
+          <button onClick={() => navigate('/entradas')} className="btn-volver">
+            Volver a lista
+          </button>
         </main>
         <Footer />
       </div>
@@ -102,20 +130,19 @@ export default function EditarEntrada() {
       <Header />
       <main className="editar-content">
         <h2>Editar Entrada del Gran Premio</h2>
-        
+
         <form onSubmit={handleSubmit} className="editar-form">
           <div className="form-section">
             <h3>Información General</h3>
-            
+
             <div className="form-group">
               <label htmlFor="titulo">Título de la Entrada:</label>
               <input
                 id="titulo"
                 name="Titulo"
                 type="text"
-                value={entrada.Titulo}
+                value={entrada.Titulo || ''}
                 onChange={handleChange}
-                placeholder="Ej: Gran Premio de Mónaco - Análisis completo"
                 required
               />
             </div>
@@ -126,9 +153,8 @@ export default function EditarEntrada() {
                 id="granPremioId"
                 name="GranPremioId"
                 type="number"
-                value={entrada.GranPremioId}
+                value={entrada.GranPremioId || ''}
                 onChange={handleChange}
-                placeholder="Ej: 1"
                 required
               />
             </div>
@@ -139,7 +165,7 @@ export default function EditarEntrada() {
                 id="fecha"
                 name="fechacreacion"
                 type="date"
-                value={entrada.fechacreacion}
+                value={entrada.fechacreacion || ''}
                 onChange={handleChange}
                 required
               />
@@ -149,24 +175,24 @@ export default function EditarEntrada() {
               <label htmlFor="tieneSprint">¿Este GP tiene Sprint?</label>
               <input
                 id="tieneSprint"
+                name="tieneSprint"
                 type="checkbox"
                 checked={tieneSprint}
-                onChange={e => setTieneSprint(e.target.checked)}
+                onChange={handleChange}
               />
             </div>
           </div>
 
           <div className="form-section">
             <h3>Análisis Personal</h3>
-            
+
             <div className="form-group">
               <label htmlFor="resumen">Resumen General:</label>
               <textarea
                 id="resumen"
                 name="resumengeneral"
-                value={entrada.resumengeneral}
+                value={entrada.resumengeneral || ''}
                 onChange={handleChange}
-                placeholder="Describe los momentos más importantes del Gran Premio..."
                 rows="4"
               />
             </div>
@@ -176,32 +202,31 @@ export default function EditarEntrada() {
               <textarea
                 id="notasPersonales"
                 name="notaspersonales"
-                value={entrada.notaspersonales}
+                value={entrada.notaspersonales || ''}
                 onChange={handleChange}
-                placeholder="Tus impresiones personales, sorpresas, decepciones..."
                 rows="4"
               />
             </div>
           </div>
 
-          <StandingsForm 
+          <StandingsForm
             onStandingsChange={handleStandingsChange}
             initialData={standingsData}
             mostrarSprint={tieneSprint}
           />
 
           {error && <p className="error-message">{error}</p>}
-          
+
           <div className="form-actions">
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => navigate('/entradas')}
               className="btn-cancelar"
             >
               Cancelar
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="btn-guardar"
               disabled={saving}
             >
