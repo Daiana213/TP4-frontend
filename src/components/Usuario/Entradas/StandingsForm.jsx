@@ -72,10 +72,14 @@ const StandingsForm = ({ onStandingsChange, initialData = {} }) => {
       handlePositionChange(type, position, 'piloto', piloto.Nombre);
       handlePositionChange(type, position, 'equipo', piloto.Equipo?.Nombre || 'Sin equipo');
       handlePositionChange(type, position, 'pilotoId', piloto.id);
+      // Guardar los puntos según la posición
+      const puntos = getPuntos(type, position);
+      handlePositionChange(type, position, 'puntos', puntos);
     }
   };
 
   const getPuntos = (type, position) => {
+    if (type === 'clasificacion') return 0; // La clasificación no otorga puntos
     const puntosArray = type === 'sprint' ? puntosSprint : puntosCarrera;
     return position < puntosArray.length ? puntosArray[position] : 0;
   };
@@ -215,4 +219,4 @@ const StandingsForm = ({ onStandingsChange, initialData = {} }) => {
   );
 };
 
-export default StandingsForm; 
+export default StandingsForm;
