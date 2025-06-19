@@ -60,7 +60,6 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
 
       if (!response.ok) {
         setErrors({ general: data.error || 'Error en el inicio de sesión' });
@@ -90,41 +89,42 @@ const Login = () => {
   return (
     <div className="login-container">
       <Header />
-      <div className="login-form">
-        <h2>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit}>
-          {errors.general && (
-            <div className="error-message general">{errors.general}</div>
-          )}
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email || ''}
-              onChange={handleChange}
-              className={errors.email ? 'error' : ''}
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
+      <main>
+        <div className="login-form">
+          <h2>Iniciar Sesión</h2>
+          <form onSubmit={handleSubmit}>
+            {errors.general && (
+              <div className="error-message general">{errors.general}</div>
+            )}
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email || ''}
+                onChange={handleChange}
+                className={errors.email ? 'error' : ''}
+              />
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="contrasena">Contraseña</label>
-            <input
-              type="password"
-              id="contrasena"
-              name="contrasena"
-              value={formData.contrasena || ''}
-              onChange={handleChange}
-              className={errors.contrasena ? 'error' : ''}
-            />
-            {errors.contrasena && <span className="error-message">{errors.contrasena}</span>}
-          </div>
-
-          <button type="submit" className="submit-button">Iniciar Sesión</button>
-        </form>
-      </div>
+            <div className="form-group">
+              <label htmlFor="contrasena">Contraseña</label>
+              <input
+                type="password"
+                id="contrasena"
+                name="contrasena"
+                value={formData.contrasena || ''}
+                onChange={handleChange}
+                className={errors.contrasena ? 'error' : ''}
+              />
+              {errors.contrasena && <span className="error-message">{errors.contrasena}</span>}
+            </div>
+            <button type="submit" className="submit-button">Iniciar Sesión</button>
+          </form>
+        </div>
+      </main>
       <Footer />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../../../config/api';
 import AdminHeader from '../AdminHeader';
-
+import '../AdminList.css';
 
 const AdminEquipos = () => {
   const [equipos, setEquipos] = useState([]);
@@ -54,6 +54,7 @@ const AdminEquipos = () => {
       
       fetchEquipos();
       resetForm();
+      setError(null);
     } catch (err) {
       setError(err.message);
     }
@@ -77,6 +78,7 @@ const AdminEquipos = () => {
     try {
       await apiService.eliminarEquipo(id);
       fetchEquipos();
+      setError(null);
     } catch (err) {
       setError(err.message);
     }
@@ -94,7 +96,7 @@ const AdminEquipos = () => {
     setCurrentId(null);
   };
 
-  if (loading) return <div className="loading">Cargando...</div>;
+  if (loading) return <div className="loading">Cargando equipos...</div>;
 
   return (
     <div className="admin-container">
@@ -116,6 +118,7 @@ const AdminEquipos = () => {
                   name="nombre"
                   value={formData.nombre}
                   onChange={handleChange}
+                  placeholder="Ej: Mercedes-AMG Petronas"
                   required
                 />
               </div>
@@ -128,6 +131,7 @@ const AdminEquipos = () => {
                   name="pais"
                   value={formData.pais}
                   onChange={handleChange}
+                  placeholder="Ej: Alemania"
                   required
                 />
               </div>
@@ -180,38 +184,39 @@ const AdminEquipos = () => {
           </div>
           
           <div className="admin-list-container">
-            <h3>Equipos Actuales</h3>
+            <h3>Equipos Registrados ({equipos.length})</h3>
             <div className="admin-list">
               {equipos.length === 0 ? (
-                <p>No hay equipos registrados</p>
+                <p>No hay equipos registrados en el sistema</p>
               ) : (
                 equipos.map(equipo => (
                   <div key={equipo.id} className="admin-item">
                     <div className="admin-item-info">
-                      <p><strong>{equipo.nombre}</strong></p>
-                      <p>País: {equipo.pais}</p>
+                      <p>{equipo.nombre}</p>
+                      <p><span className="equipo-nombre">País:</span> {equipo.pais}</p>
+                      
                       {equipo.logo && (
                         <img 
                           src={equipo.logo} 
                           alt={`Logo de ${equipo.nombre}`} 
-                          style={{ maxWidth: '100px', maxHeight: '50px' }} 
+                          className="team-logo"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
                         />
                       )}
-                      <div style={{ 
-                        display: 'flex', 
-                        marginTop: '5px' 
-                      }}>
-                        <div style={{ 
-                          backgroundColor: equipo.colorPrimario || '#000', 
-                          width: '20px', 
-                          height: '20px', 
-                          marginRight: '5px' 
-                        }}></div>
-                        <div style={{ 
-                          backgroundColor: equipo.colorSecundario || '#fff', 
-                          width: '20px', 
-                          height: '20px' 
-                        }}></div>
+                      
+                      <div className="team-colors">
+                        <div 
+                          className="team-color" 
+                          style={{ backgroundColor: equipo.colorPrimario || '#000' }}
+                          title="Color Primario"
+                        ></div>
+                        <div 
+                          className="team-color" 
+                          style={{ backgroundColor: equipo.colorSecundario || '#fff' }}
+                          title="Color Secundario"
+                        ></div>
                       </div>
                     </div>
                     <div className="admin-item-actions">

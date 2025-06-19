@@ -3,6 +3,15 @@
     flex-direction: column;
     min-height: 100vh;
 }
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
   
 .login-form {
   background-color: var(--white);

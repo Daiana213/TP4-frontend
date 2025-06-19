@@ -1,6 +1,15 @@
 .inicio-container {
-  font-family: Arial, sans-serif;
-  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
   box-sizing: border-box;
 }
 
@@ -13,52 +22,63 @@
   font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 5px white;
-
 }
 
-.calendario {
-  margin: 20px;
-  margin-top: 20px;
-  padding: 30px;
-  border-radius: 8px;
-  background: #f4f4f4;
-}
-
-.tabla-carreras {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.tabla-carreras th, .tabla-carreras td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.tabla-carreras th {
-  background: #ff4500;
+.calendario h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
   color: white;
 }
 
-.cargando, .error {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-top: 20px;
+.carreras-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
 }
 
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #ff4500;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  display: inline-block;
+.carrera-card {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+.carrera-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.carrera-card h3 {
+  color: #b80000;
+  margin-bottom: 12px;
+}
+
+.carrera-card p {
+  margin: 6px 0;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  main {
+    margin: 20px;
+    padding: 16px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .carrera-card {
+    padding: 16px;
+  }
+
+  .carrera-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .carrera-card p {
+    font-size: 0.95rem;
   }
 }

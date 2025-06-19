@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../../../config/api';
 import AdminHeader from '../AdminHeader';
+import '../AdminList.css';
 
 const AdminPilotos = () => {
   const [pilotos, setPilotos] = useState([]);
@@ -132,7 +133,17 @@ const AdminPilotos = () => {
     setCurrentId(null);
   };
 
-  if (loadingPilotos || loadingEquipos) return <div className="loading">Cargando...</div>;
+  const formatDate = (dateString) => {
+    if (!dateString) return 'No especificada';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  if (loadingPilotos || loadingEquipos) return <div className="loading">Cargando pilotos...</div>;
 
   return (
     <div className="admin-container">
@@ -147,25 +158,29 @@ const AdminPilotos = () => {
             
             <form className="admin-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="nombre">Nombre</label>
+                <label htmlFor="nombre">Nombre Completo</label>
                 <input
                   type="text"
                   id="nombre"
                   name="nombre"
                   value={formData.nombre}
                   onChange={handleChange}
+                  placeholder="Ej: Lewis Hamilton"
                   required
                 />
               </div>
               
               <div className="form-group">
-                <label htmlFor="numero">Número</label>
+                <label htmlFor="numero">Número de Piloto</label>
                 <input
                   type="number"
                   id="numero"
                   name="numero"
                   value={formData.numero}
                   onChange={handleChange}
+                  placeholder="Ej: 44"
+                  min="1"
+                  max="99"
                   required
                 />
               </div>
@@ -196,30 +211,35 @@ const AdminPilotos = () => {
                   name="pais"
                   value={formData.pais}
                   onChange={handleChange}
+                  placeholder="Ej: Reino Unido"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="puntos">Puntos</label>
+                <label htmlFor="puntos">Puntos Totales</label>
                 <input
                   type="number"
                   id="puntos"
                   name="puntos"
                   value={formData.puntos}
                   onChange={handleChange}
+                  placeholder="0"
+                  min="0"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="campeonatos">Campeonatos</label>
+                <label htmlFor="campeonatos">Campeonatos Mundiales</label>
                 <input
                   type="number"
                   id="campeonatos"
                   name="campeonatos"
                   value={formData.campeonatos}
                   onChange={handleChange}
+                  placeholder="0"
+                  min="0"
                   required
                 />
               </div>
@@ -232,6 +252,8 @@ const AdminPilotos = () => {
                   name="podios"
                   value={formData.podios}
                   onChange={handleChange}
+                  placeholder="0"
+                  min="0"
                   required
                 />
               </div>
@@ -244,6 +266,8 @@ const AdminPilotos = () => {
                   name="victorias"
                   value={formData.victorias}
                   onChange={handleChange}
+                  placeholder="0"
+                  min="0"
                   required
                 />
               </div>
@@ -274,38 +298,45 @@ const AdminPilotos = () => {
           </div>
           
           <div className="admin-list-container">
-            <h3>Pilotos Actuales</h3>
+            <h3>🏁 Pilotos Registrados ({pilotos.length})</h3>
             <div className="admin-list">
               {pilotos.length === 0 ? (
-                <p>No hay pilotos registrados</p>
+                <p>No hay pilotos registrados en el sistema</p>
               ) : (
-                pilotos.map(piloto => (
-                  <div key={piloto.id} className="admin-item">
-                    <div className="admin-item-info">
-                      <p><strong>{piloto.nombre}</strong> - #{piloto.numero}</p>
-                      <p>Equipo: {equipos.find(e => Number(e.id) === Number(piloto.equipoId))?.nombre || 'No asignado'}</p>
-                      <p>País: {piloto.pais}</p>
-                      <p>Puntos: {piloto.puntos}</p>
-                      <p>Campeonatos: {piloto.campeonatos}</p>
-                      <p>Podios: {piloto.podios}</p>
-                      <p>Victorias: {piloto.victorias}</p>
+                pilotos.map(piloto => {
+                  const equipo = equipos.find(e => Number(e.id) === Number(piloto.equipoId));
+                  return (
+                    <div key={piloto.id} className="admin-item">
+                      <div className="admin-item-info">
+                        <p>#{piloto.numero} - {piloto.nombre}</p>
+                        <p><span className="equipo-nombre">Equipo:</span> {equipo?.nombre || 'No asignado'}</p>
+                        <p><span className="equipo-nombre">País:</span> {piloto.pais}</p>
+                        <p><span className="equipo-nombre">Nacimiento:</span> {formatDate(piloto.fechaNacimiento)}</p>
+                        
+                        <div className="stats">
+                          <span className="stat">{piloto.campeonatos} Campeonatos</span>
+                          <span className="stat">{piloto.victorias} Victorias</span>
+                          <span className="stat">{piloto.podios} Podios</span>
+                          <span className="stat">{piloto.puntos} Puntos</span>
+                        </div>
+                      </div>
+                      <div className="admin-item-actions">
+                        <button 
+                          className="edit-btn" 
+                          onClick={() => handleEdit(piloto)}
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          className="delete-btn" 
+                          onClick={() => handleDelete(piloto.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </div>
                     </div>
-                    <div className="admin-item-actions">
-                      <button 
-                        className="edit-btn" 
-                        onClick={() => handleEdit(piloto)}
-                      >
-                        Editar
-                      </button>
-                      <button 
-                        className="delete-btn" 
-                        onClick={() => handleDelete(piloto.id)}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>

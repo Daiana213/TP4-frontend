@@ -1,37 +1,41 @@
-/* Estilos para AdminCalendario.jsx */
+main{
+    display: flex;
+    flex-direction: column;
+}
 
 .admin-container {
     font-family: var(--font-primary);
-    padding: var(--spacing-md);
     background-color: var(--gray-light);
     min-height: 100vh;
-  }
+}
   
-  .titulo {
-    font-size: var(--font-size-3xl);
-    color: var(--primary-color);
-    margin-bottom: var(--spacing-md);
+.titulo{
     text-align: center;
-  }
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-primary);
+}
   
-  .admin-content {
+.admin-content {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
-  }
+}
   
-  .admin-form-container {
+.admin-form-container {
     background-color: var(--white);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow);
     padding: var(--spacing-md);
-  }
+}
   
-  .admin-form-container h3 {
+.admin-form-container h3 {
     font-size: var(--font-size-xl);
     margin-bottom: var(--spacing-sm);
     color: var(--text-color);
-  }
+}
   
   .admin-forms-grid {
     display: grid;
@@ -114,9 +118,11 @@
   
   .admin-list-container {
     background-color: var(--white);
+    display: grid;
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow);
     padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
   }
   
   .admin-list-container h3 {
@@ -129,6 +135,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .admin-item {

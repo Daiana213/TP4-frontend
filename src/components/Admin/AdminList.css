@@ -1,0 +1,340 @@
+/* Estilos compartidos para listas de administración */
+
+/* Contenedor principal de administración */
+.admin-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Contenido principal */
+.admin-content {
+  flex-grow: 1;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+/* Contenedor del formulario */
+.admin-form-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+}
+
+.admin-form-container h3 {
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* Formulario */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Botones del formulario */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn {
+  background: #007bff;
+  color: white;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #545b62;
+  transform: translateY(-1px);
+}
+
+/* Contenedor de la lista */
+.admin-list-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.admin-list-container h3 {
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* Lista de elementos */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tarjeta de elemento */
+.admin-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.admin-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+}
+
+/* Información del elemento */
+.admin-item-info {
+  margin-bottom: 15px;
+}
+
+.admin-item-info p {
+  margin: 8px 0;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.admin-item-info p:first-child {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.admin-item-info .equipo-nombre {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.admin-item-info .stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 12px;
+}
+
+.admin-item-info .stat {
+  background: #e9ecef;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Colores de equipo */
+.team-colors {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.team-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo del equipo */
+.team-logo {
+  max-width: 80px;
+  max-height: 40px;
+  object-fit: contain;
+  margin: 10px 0;
+  border-radius: 4px;
+  background: #fff;
+  padding: 4px;
+}
+
+/* Botones de acción */
+.admin-item-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background: #28a745;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Mensaje de error */
+.error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+/* Estado de carga */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+/* Mensaje de lista vacía */
+.admin-list p {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 40px 20px;
+}
+
+/* Título principal */
+.titulo {
+  font-size: 2.2rem;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 30px 0;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .admin-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    margin: 10px;
+    padding: 0 10px;
+  }
+  
+  .admin-form-container,
+  .admin-list-container {
+    padding: 20px;
+  }
+  
+  .admin-item {
+    padding: 15px;
+  }
+  
+  .admin-item-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .titulo {
+    font-size: 1.8rem;
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-item-info .stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .admin-item-info .stat {
+    text-align: center;
+  }
+} 

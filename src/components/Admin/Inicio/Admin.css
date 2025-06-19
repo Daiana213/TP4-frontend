@@ -10,7 +10,7 @@
   flex-grow: 1;
   max-width: 800px;
   margin: 40px auto;
-  padding: 20px;
+  padding: 30px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
@@ -18,64 +18,94 @@
 }
 
 .admin-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #1a1a1a;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-weight: 700;
 }
 
 .admin-desc {
   color: #555;
   font-size: 1.1rem;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  line-height: 1.6;
 }
 
 .admin-actions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .admin-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: #ffffff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+  padding: 16px 24px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  width: 100%;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
 }
 
 .admin-btn:hover {
-  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  background: linear-gradient(135deg, #0056b3, #004085);
 }
 
 .admin-btn .material-icons {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 /* Responsivo */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .admin-main {
     margin: 20px;
-    padding: 16px;
+    padding: 24px;
   }
 
   .admin-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .admin-desc {
+    font-size: 1rem;
+    margin-bottom: 30px;
   }
 
   .admin-btn {
-    width: 100%;
-    justify-content: center;
-    font-size: 0.95rem;
+    padding: 14px 20px;
+    font-size: 1rem;
   }
 
   .admin-btn .material-icons {
-    font-size: 18px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-main {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .admin-title {
+    font-size: 1.8rem;
+  }
+
+  .admin-actions {
+    gap: 16px;
   }
 }

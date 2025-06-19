@@ -42,39 +42,30 @@ function Inicio() {
   return (
     <div className="inicio-container">
       <Header />
+      <main>
         <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
         <section className="calendario">
           <h2>Próximas Carreras</h2>
           {proximasCarreras.length === 0 ? (
             <p>No hay carreras próximas disponibles.</p>
           ) : (
-            <table className="tabla-carreras">
-              <thead>
-                <tr>
-                  <th>Ronda</th>
-                  <th>Gran Premio</th>
-                  <th>Fecha</th>
-                  <th>País</th>
-                  <th>Circuito</th>
-                </tr>
-              </thead>
-              <tbody>
-                {proximasCarreras.map((carrera) => (
-                  <tr key={carrera.id}>
-                    <td>{carrera.ronda}</td>
-                    <td>{carrera.nombre}</td>
-                    <td>{formatearFecha(carrera.fecha)}</td>
-                    <td>{carrera.pais}</td>
-                    <td>{carrera.circuito}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="carreras-lista">
+              {proximasCarreras.slice(0, 2).map((carrera) => (
+                <div key={carrera.id} className="carrera-card">
+                  <h3>Ronda {carrera.ronda} - {carrera.nombre}</h3>
+                  <p><strong>Fecha:</strong> {formatearFecha(carrera.fecha)}</p>
+                  <p><strong>País:</strong> {carrera.pais}</p>
+                  <p><strong>Circuito:</strong> {carrera.circuito}</p>
+                </div>
+              ))}
+            </div>
           )}
         </section>
+      </main>
       <Footer />
     </div>
   );
-}
+};
+
 
 export default Inicio;

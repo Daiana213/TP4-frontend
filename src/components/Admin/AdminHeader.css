@@ -5,15 +5,44 @@
   padding: 1rem 2rem;
   background-color: #333;
   color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .admin-logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: #ff0000;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.admin-buttons {
+.admin-logo:hover {
+  color: #cc0000;
+}
+
+.user-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-link {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.admin-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #ff0000;
+}
+
+.admin-bottons {
   display: flex;
   gap: 1rem;
 }
@@ -34,6 +63,7 @@
 
 .logout:hover {
   background-color: #cc0000;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
@@ -43,13 +73,13 @@
     padding: 1rem;
   }
   
-  .admin-links {
+  .user-links {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
   }
   
-  .admin-buttons {
+  .admin-bottons {
     width: 100%;
     justify-content: center;
   }
