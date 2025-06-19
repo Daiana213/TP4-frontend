@@ -4,14 +4,6 @@
   min-height: 100vh;
 }
 
-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
 
 .registro-form {
   width: 100%;

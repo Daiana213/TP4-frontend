@@ -47,23 +47,5 @@
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-body {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  z-index: 0;
-  background-color: var(--secondary-color);
-}
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url('../../public/pilotos.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: blur(3px); /* <--- aquí lo suavizás */
-  opacity: 0.6;
-  z-index: -1;
-}
+

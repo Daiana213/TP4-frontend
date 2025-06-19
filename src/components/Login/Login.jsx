@@ -37,10 +37,7 @@ const Login = () => {
       });
 
       const data = await response.json();
-<<<<<<< HEAD
-=======
       console.log('Respuesta login:', data);
->>>>>>> 1f963bd1f260eb8a48cace03fb769952a2651b22
 
       if (!response.ok) {
         setErrors({ general: data.error || 'Error en el inicio de sesión' });
@@ -65,21 +62,17 @@ const Login = () => {
   return (
     <div className="login-container">
       <Header />
-<<<<<<< HEAD
       <main>
         <div className="login-form">
           <h2>Iniciar Sesión</h2>
           <form onSubmit={handleSubmit}>
-            {errors.general && (
-              <div className="error-message general">{errors.general}</div>
-            )}
+            {errors.general && <div className="error-message general">{errors.general}</div>}
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                id="email"
                 name="email"
-                value={formData.email || ''}
+                value={formData.email}
                 onChange={handleChange}
                 className={errors.email ? 'error' : ''}
               />
@@ -90,51 +83,18 @@ const Login = () => {
               <label htmlFor="contrasena">Contraseña</label>
               <input
                 type="password"
-                id="contrasena"
                 name="contrasena"
-                value={formData.contrasena || ''}
+                value={formData.contrasena}
                 onChange={handleChange}
                 className={errors.contrasena ? 'error' : ''}
               />
               {errors.contrasena && <span className="error-message">{errors.contrasena}</span>}
             </div>
+
             <button type="submit" className="submit-button">Iniciar Sesión</button>
           </form>
         </div>
       </main>
-=======
-      <div className="login-form">
-        <h2>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit}>
-          {errors.general && <div className="error-message general">{errors.general}</div>}
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? 'error' : ''}
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="contrasena">Contraseña</label>
-            <input
-              type="password"
-              name="contrasena"
-              value={formData.contrasena}
-              onChange={handleChange}
-              className={errors.contrasena ? 'error' : ''}
-            />
-            {errors.contrasena && <span className="error-message">{errors.contrasena}</span>}
-          </div>
-
-          <button type="submit" className="submit-button">Iniciar Sesión</button>
-        </form>
-      </div>
->>>>>>> 1f963bd1f260eb8a48cace03fb769952a2651b22
       <Footer />
     </div>
   );

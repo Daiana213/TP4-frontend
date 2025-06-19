@@ -49,3 +49,12 @@
   --border-radius-lg: 1rem;      /* 16px */
   --border-radius-full: 9999px;
 }
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}

@@ -34,6 +34,9 @@ function App() {
           <Route path="/calendario" element={<ProtectedRoute><Calendario /></ProtectedRoute>} />
           <Route path="/entradas" element={<ProtectedRoute><Entradas /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+          <Route path="/admin/pilotos" element={<AdminRoute><AdminPilotos /></AdminRoute>} />
+          <Route path="/admin/equipos" element={<AdminRoute><AdminEquipos /></AdminRoute>} />
+          <Route path="/admin/calendario" element={<AdminRoute><AdminCalendario /></AdminRoute>} />
           <Route path="/detalleentrada/:id" element={<ProtectedRoute><DetalleEntrada /></ProtectedRoute>} />
           <Route path="/editarentrada/:id" element={<ProtectedRoute><EditarEntrada /></ProtectedRoute>} />
           <Route path="/nuevaentrada" element={<ProtectedRoute><NuevaEntrada /></ProtectedRoute>} />
