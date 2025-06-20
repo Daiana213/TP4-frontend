@@ -3,7 +3,7 @@ import './StandingsForm.css';
 import { apiService } from '../../../../config/api';
 
 export default function StandingsForm({ onStandingsChange, initialData = {}, mostrarSprint = true }) {
-  const [activeTab, setActiveTab] = useState('clasificacion');
+  const [activeTab, setActiveTab] = useState('clasificacion'); // Corrección: declarado activeTab
   const [standings, setStandings] = useState({
     clasificacion: [],
     sprint: [],
@@ -16,7 +16,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
   const puntosSprint = [8, 7, 6, 5, 4, 3, 2, 1];
   const puntosCarrera = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 
-  // Inicializa standings al montar
+  // Parsear y setear standings al montar o al cambiar initialData
   useEffect(() => {
     const parseStandings = (data) => {
       if (!data) return [];
@@ -36,7 +36,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
     });
   }, [initialData]);
 
-  // Carga pilotos
+  // Cargar pilotos junto con sus equipos
   useEffect(() => {
     const cargarPilotos = async () => {
       try {
@@ -51,18 +51,21 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
     cargarPilotos();
   }, []);
 
+  // Función para asignar puntos según tipo y posición
   const getPuntos = (type, pos) => {
     if (type === 'clasificacion') return 0;
     const arr = type === 'sprint' ? puntosSprint : puntosCarrera;
     return arr[pos] || 0;
   };
 
+  // Notificar cambios hacia afuera (padre)
   const notifyChange = (updated) => {
     if (onStandingsChange && typeof onStandingsChange === 'function') {
       onStandingsChange(updated);
     }
   };
 
+  // Actualizar posición, piloto, equipo, puntos, etc.
   const handlePositionChange = (type, idx, field, value) => {
     setStandings(prev => {
       const updated = { ...prev };
@@ -74,9 +77,11 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
     });
   };
 
+  // Manejar selección de piloto, asignando también equipo y puntos
   const handlePilotoSelect = (type, idx, pilotoId) => {
     const piloto = pilotos.find(p => p.id === +pilotoId);
     if (!piloto) {
+      // Si no hay piloto seleccionado, limpiar la fila
       handlePositionChange(type, idx, 'piloto', '');
       handlePositionChange(type, idx, 'equipo', '');
       handlePositionChange(type, idx, 'pilotoId', '');
@@ -84,9 +89,10 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
       return;
     }
 
-    const selected = standings[type].map(s => s?.pilotoId).filter(Boolean);
-    if (selected.includes(piloto.id)) {
-      alert('Piloto ya seleccionado');
+    // Evitar duplicados en la misma lista
+    const selectedIds = standings[type].map(s => s?.pilotoId).filter(Boolean);
+    if (selectedIds.includes(piloto.id)) {
+      alert('Piloto ya seleccionado en esta lista');
       return;
     }
 
@@ -96,7 +102,8 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
     handlePositionChange(type, idx, 'puntos', getPuntos(type, idx));
   };
 
-  const renderRows = type => {
+  // Renderizar filas por tipo (clasificación, sprint, carrera)
+  const renderRows = (type) => {
     if (type === 'sprint' && !mostrarSprint) return null;
     const max = type === 'sprint' ? 8 : 10;
     return Array.from({ length: max }, (_, idx) => {
@@ -137,36 +144,41 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
 
   return (
     <div className="standings-form">
-     <div className="tabs">
-  <button
-    type="button" // 👈 AGREGAR ESTO
-    className={activeTab === 'clasificacion' ? 'active' : ''}
-    onClick={() => setActiveTab('clasificacion')}
-  >
-    Clasificación
-  </button>
-
-  {mostrarSprint && (
-    <button
-      type="button" // 👈 AGREGAR ESTO
-      className={activeTab === 'sprint' ? 'active' : ''}
-      onClick={() => setActiveTab('sprint')}
-    >
-      Sprint
-    </button>
-  )}
-
-  <button
-    type="button" // 👈 AGREGAR ESTO
-    className={activeTab === 'carrera' ? 'active' : ''}
-    onClick={() => setActiveTab('carrera')}
-  >
-    Carrera
-  </button>
-</div>
+      <div className="tabs">
+        <button
+          type="button"
+          className={activeTab === 'clasificacion' ? 'active' : ''}
+          onClick={() => setActiveTab('clasificacion')}
+        >
+          Clasificación
+        </button>
+        {mostrarSprint && (
+          <button
+            type="button"
+            className={activeTab === 'sprint' ? 'active' : ''}
+            onClick={() => setActiveTab('sprint')}
+          >
+            Sprint
+          </button>
+        )}
+        <button
+          type="button"
+          className={activeTab === 'carrera' ? 'active' : ''}
+          onClick={() => setActiveTab('carrera')}
+        >
+          Carrera
+        </button>
+      </div>
 
       <table className="standings-table">
-        <thead><tr><th>Pos</th><th>Piloto</th><th>Tiempo</th><th>Puntos</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Piloto</th>
+            <th>Tiempo</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
         <tbody>{renderRows(activeTab)}</tbody>
       </table>
     </div>
