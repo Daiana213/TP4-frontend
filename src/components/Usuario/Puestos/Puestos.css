@@ -1,0 +1,55 @@
+.puestos-container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .puestos-titulo {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .ranking-section {
+    margin-bottom: 2rem;
+  }
+  
+  .lista-ranking {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .item-ranking {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .equipo-nombre {
+    font-style: italic;
+    color: #666;
+  }
+  
+  .boton-recalcular {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .boton-recalcular:hover {
+    background-color: #0056b3;
+  }
+  
+  .mensaje {
+    color: green;
+    margin-bottom: 1rem;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  

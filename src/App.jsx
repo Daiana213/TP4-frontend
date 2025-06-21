@@ -18,6 +18,7 @@ import AdminCalendario from './components/Admin/Calendario/AdminCalendario';
 import DetalleEntrada from './components/Usuario/Entradas/DetalleEntrada';
 import EditarEntrada from './components/Usuario/Entradas/EditarEntrada';
 import NuevaEntrada from './components/Usuario/Entradas/NuevaEntrada';
+import Puestos from './components/Usuario/Puestos/Puestos';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/detalleentrada/:id" element={<ProtectedRoute><DetalleEntrada /></ProtectedRoute>} />
           <Route path="/editarentrada/:id" element={<ProtectedRoute><EditarEntrada /></ProtectedRoute>} />
           <Route path="/nuevaentrada" element={<ProtectedRoute><NuevaEntrada /></ProtectedRoute>} />
+          <Route path="/puestos" element={<ProtectedRoute><Puestos /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </Router>

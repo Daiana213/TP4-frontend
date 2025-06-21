@@ -22,6 +22,7 @@ const UserHeader = () => {
         <button className="user-link" onClick={() => navigate('/pilotos')}>Pilotos</button>
         <button className="user-link" onClick={() => navigate('/equipos')}>Equipos</button>
         <button className="user-link" onClick={() => navigate('/calendario')}>Calendario</button>
+        <button className="user-link" onClick={() => navigate('/puestos')}>Standings</button>
       </div>
       <div className="user-profile">
       <span className="user-greeting">Hola, {currentUser?.nombre || 'Usuario'}</span>
