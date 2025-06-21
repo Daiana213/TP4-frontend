@@ -31,10 +31,13 @@ const AdminPilotos = () => {
   const fetchPilotos = async () => {
     setLoadingPilotos(true);
     try {
+      console.log('Obteniendo pilotos...');
       const data = await apiService.obtenerPilotos();
+      console.log('Pilotos obtenidos:', data);
       setPilotos(data);
       setLoadingPilotos(false);
     } catch (err) {
+      console.error('Error al cargar pilotos:', err);
       setError(`Error al cargar los pilotos: ${err.message}`);
       setLoadingPilotos(false);
     }
@@ -43,10 +46,13 @@ const AdminPilotos = () => {
   const fetchEquipos = async () => {
     setLoadingEquipos(true);
     try {
+      console.log('Obteniendo equipos...');
       const data = await apiService.obtenerEquipos();
+      console.log('Equipos obtenidos:', data);
       setEquipos(data);
       setLoadingEquipos(false);
     } catch (err) {
+      console.error('Error al cargar equipos:', err);
       setError(`Error al cargar los equipos: ${err.message}`);
       setLoadingEquipos(false);
     }
@@ -63,15 +69,27 @@ const AdminPilotos = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validación de campos requeridos
+    if (!formData.nombre.trim() || !formData.numero || !formData.equipoId) {
+      setError('Por favor, completa todos los campos requeridos');
+      return;
+    }
+    
+    // Validación de número de piloto
+    if (formData.numero < 1 || formData.numero > 99) {
+      setError('El número de piloto debe estar entre 1 y 99');
+      return;
+    }
+    
     // Ensure numerical fields are properly converted
     const submissionData = {
       ...formData,
       numero: Number(formData.numero),
       equipoId: Number(formData.equipoId),
-      puntos: Number(formData.puntos),
-      campeonatos: Number(formData.campeonatos),
-      podios: Number(formData.podios),
-      victorias: Number(formData.victorias)
+      puntos: Number(formData.puntos) || 0,
+      campeonatos: Number(formData.campeonatos) || 0,
+      podios: Number(formData.podios) || 0,
+      victorias: Number(formData.victorias) || 0
     };
     
     try {
@@ -85,20 +103,21 @@ const AdminPilotos = () => {
       resetForm();
       setError(null); // Clear any previous errors on success
     } catch (err) {
+      console.error('Error en operación de piloto:', err);
       setError(`Error al ${editMode ? 'actualizar' : 'crear'} piloto: ${err.message}`);
     }
   };
 
   const handleEdit = (piloto) => {
     setFormData({
-      nombre: piloto.nombre,
-      numero: piloto.numero,
-      equipoId: piloto.equipoId,
-      pais: piloto.pais,
-      puntos: piloto.puntos,
-      campeonatos: piloto.campeonatos,
-      podios: piloto.podios,
-      victorias: piloto.victorias,
+      nombre: piloto.Nombre,
+      numero: piloto.Numero,
+      equipoId: piloto.EquipoId,
+      pais: piloto.Pais,
+      puntos: piloto.Puntos,
+      campeonatos: piloto.Campeonatos,
+      podios: piloto.Podios,
+      victorias: piloto.Wins,
       fechaNacimiento: piloto.fechaNacimiento
     });
     setEditMode(true);
@@ -197,7 +216,7 @@ const AdminPilotos = () => {
                   <option value="">Seleccionar equipo</option>
                   {equipos.map((equipo) => (
                     <option key={equipo.id} value={equipo.id}>
-                      {equipo.nombre}
+                      {equipo.Nombre}
                     </option>
                   ))}
                 </select>
@@ -298,45 +317,42 @@ const AdminPilotos = () => {
           </div>
           
           <div className="admin-list-container">
-            <h3>🏁 Pilotos Registrados ({pilotos.length})</h3>
+            <h3>Pilotos Registrados)</h3>
             <div className="admin-list">
               {pilotos.length === 0 ? (
                 <p>No hay pilotos registrados en el sistema</p>
               ) : (
-                pilotos.map(piloto => {
-                  const equipo = equipos.find(e => Number(e.id) === Number(piloto.equipoId));
-                  return (
-                    <div key={piloto.id} className="admin-item">
-                      <div className="admin-item-info">
-                        <p>#{piloto.numero} - {piloto.nombre}</p>
-                        <p><span className="equipo-nombre">Equipo:</span> {equipo?.nombre || 'No asignado'}</p>
-                        <p><span className="equipo-nombre">País:</span> {piloto.pais}</p>
-                        <p><span className="equipo-nombre">Nacimiento:</span> {formatDate(piloto.fechaNacimiento)}</p>
-                        
-                        <div className="stats">
-                          <span className="stat">{piloto.campeonatos} Campeonatos</span>
-                          <span className="stat">{piloto.victorias} Victorias</span>
-                          <span className="stat">{piloto.podios} Podios</span>
-                          <span className="stat">{piloto.puntos} Puntos</span>
-                        </div>
-                      </div>
-                      <div className="admin-item-actions">
-                        <button 
-                          className="edit-btn" 
-                          onClick={() => handleEdit(piloto)}
-                        >
-                          Editar
-                        </button>
-                        <button 
-                          className="delete-btn" 
-                          onClick={() => handleDelete(piloto.id)}
-                        >
-                          Eliminar
-                        </button>
+                pilotos.map(piloto => (
+                  <div key={piloto.id} className="admin-item">
+                    <div className="admin-item-info">
+                      <p>#{piloto.Numero} - {piloto.Nombre}</p>
+                      <p><span className="equipo-nombre">Equipo:</span> {piloto.Equipo?.Nombre || 'No asignado'}</p>
+                      <p><span className="equipo-nombre">País:</span> {piloto.Pais}</p>
+                      <p><span className="equipo-nombre">Nacimiento:</span> {formatDate(piloto.fechaNacimiento)}</p>
+                      
+                      <div className="stats">
+                        <span className="stat">{piloto.Campeonatos} Campeonatos</span>
+                        <span className="stat">{piloto.Wins} Victorias</span>
+                        <span className="stat">{piloto.Podios} Podios</span>
+                        <span className="stat">{piloto.Puntos} Puntos</span>
                       </div>
                     </div>
-                  );
-                })
+                    <div className="admin-item-actions">
+                      <button 
+                        className="edit-btn" 
+                        onClick={() => handleEdit(piloto)}
+                      >
+                        Editar
+                      </button>
+                      <button 
+                        className="delete-btn" 
+                        onClick={() => handleDelete(piloto.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))
               )}
             </div>
           </div>

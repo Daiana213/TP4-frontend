@@ -33,8 +33,8 @@ export default function NuevaEntrada() {
 
     try {
       await apiService.crearEntradaUsuario({
-        Titulo: titulo,
-        GranPremioId: parseInt(granPremioId),
+          Titulo: titulo,
+          GranPremioId: parseInt(granPremioId),
         resumengeneral: resumen,
         notaspersonales: notasPersonales,
         fechacreacion: fecha,
@@ -156,9 +156,9 @@ export default function NuevaEntrada() {
               {loading ? 'Creando...' : 'Crear Entrada'}
             </button>
           </div>
-        </form>
+    </form>
       </main>
-      <Footer />
+    <Footer />
     </div>
   );
 }

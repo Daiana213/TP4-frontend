@@ -44,6 +44,20 @@ const AdminCalendario = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación de campos requeridos
+    if (!formData.nombre.trim() || !formData.fecha || !formData.pais.trim() || !formData.circuito.trim()) {
+      setError('Por favor, completa todos los campos requeridos');
+      return;
+    }
+    
+    // Validación de fecha
+    const fechaCarrera = new Date(formData.fecha);
+    const hoy = new Date();
+    if (fechaCarrera < hoy) {
+      setError('La fecha de la carrera no puede ser anterior a hoy');
+      return;
+    }
+
     try {
       if (editMode) {
         await apiService.actualizarGranPremio(currentId, formData);
@@ -53,8 +67,10 @@ const AdminCalendario = () => {
 
       fetchCalendario();
       resetForm();
+      setError(null);
     } catch (err) {
-      setError(err.message);
+      console.error('Error en operación de calendario:', err);
+      setError(`Error al ${editMode ? 'actualizar' : 'crear'} carrera: ${err.message}`);
     }
   };
 
@@ -108,7 +124,7 @@ const AdminCalendario = () => {
       <AdminHeader />
       <main>
         <h1 className="titulo">Gestión del Calendario</h1>
-        <section clase="admin-content">
+        <section className="admin-content">
             <div className="admin-form-container">
               <h3>{editMode ? 'Editar Carrera' : 'Agregar Nueva Carrera'}</h3>
               {error && <p className="error">{error}</p>}

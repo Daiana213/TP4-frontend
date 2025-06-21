@@ -118,7 +118,7 @@ const DetalleEntrada = () => {
         </div>
 
         <div className="entrada-content">
-          <div className="entrada-info">
+        <div className="entrada-info">
             <div className="info-section">
               <h3>Resumen General</h3>
               <p>{entrada.resumengeneral || 'No hay resumen disponible'}</p>

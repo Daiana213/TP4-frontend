@@ -3,7 +3,7 @@ import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
 import { apiService } from '../../../../config/api';
 import { useAuth } from '../../../context/AuthContext';
-import { useNavigate } from 'react-router-dom'; // <-- Importamos useNavigate para redirigir
+import { useNavigate } from 'react-router-dom';
 import './Inicio.css';
 
 function Inicio() {
@@ -12,7 +12,7 @@ function Inicio() {
   const [equipos, setEquipos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,11 +29,11 @@ function Inicio() {
         ]);
 
         setCarreras(carrerasData);
-        // Ordenar y tomar top 3 pilotos por puntos descendente
+        // Ordenar y tomar top 3 pilotos por puntos descendente (podio)
         const pilotosTop = [...pilotosData].sort((a, b) => b.Puntos - a.Puntos).slice(0, 3);
         setPilotos(pilotosTop);
 
-        // Ordenar y tomar top 3 equipos por puntos descendente
+        // Ordenar y tomar top 3 equipos por puntos descendente (podio)
         const equiposTop = [...equiposData].sort((a, b) => b.Puntos - a.Puntos).slice(0, 3);
         setEquipos(equiposTop);
 
@@ -51,7 +51,7 @@ function Inicio() {
     return new Date(fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
   };
 
-  // Filtrar próximas dos carreras
+  // Filtrar próximas carreras
   const hoy = new Date();
   const proximasCarreras = carreras
     .filter((carrera) => new Date(carrera.fecha) > hoy)
@@ -63,57 +63,113 @@ function Inicio() {
   return (
     <div className="inicio-container">
       <Header />
-      <main>
-        <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
+      <main className="inicio-main">
+        <div className="welcome-section">
+          <h1 className="titulo">Hola, {currentUser?.nombre || 'Usuario'}</h1>
+          <p className="subtitle">Tu diario personal de Fórmula 1</p>
+        </div>
 
-        <section className="calendario">
-          <h2>Próximas Carreras</h2>
-          {proximasCarreras.length === 0 ? (
-            <p>No hay carreras próximas disponibles.</p>
-          ) : (
-            <div className="carreras-lista">
-              {proximasCarreras.map((carrera) => (
-                <div key={carrera.id} className="carrera-card">
-                  <h3>Ronda {carrera.ronda} - {carrera.nombre}</h3>
-                  <p><strong>Fecha:</strong> {formatearFecha(carrera.fecha)}</p>
-                  <p><strong>País:</strong> {carrera.pais}</p>
-                  <p><strong>Circuito:</strong> {carrera.circuito}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+        <div className="main-content-grid">
+          <div className="column">
+            <section className="dashboard-card calendario-card">
+              <div className="card-header">
+                <h2>Calendario F1</h2>
+              </div>
+              <div className="card-content">
+                {proximasCarreras.length === 0 ? (
+                  <p className="no-data">No hay carreras próximas disponibles.</p>
+                ) : (
+                  <div className="carreras-lista">
+                    {proximasCarreras.map((carrera, index) => (
+                      <div key={carrera.id} className="carrera-item">
+                        <div className="carrera-header">
+                          <span className="carrera-round">Ronda {carrera.ronda}</span>
+                          <span className="carrera-date">{formatearFecha(carrera.fecha)}</span>
+                        </div>
+                        <h3 className="carrera-name">{carrera.nombre}</h3>
+                        <div className="carrera-details">
+                          <span className="carrera-country">{carrera.pais}</span>
+                          <span className="carrera-circuit">{carrera.circuito}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
 
-        <section className="ranking">
-          <h2>Top 3 Pilotos</h2>
-          {pilotos.length === 0 ? (
-            <p>No hay datos de pilotos.</p>
-          ) : (
-            <ul>
-              {pilotos.map((piloto) => (
-                <li key={piloto.id}>{piloto.Nombre} - {piloto.Puntos} pts</li>
-              ))}
-            </ul>
-          )}
+          <div className="column">
+            <section className="dashboard-card pilotos-card">
+              <div className="card-header">
+                <h2>Podio Pilotos</h2>
+              </div>
+              <div className="card-content">
+                {pilotos.length === 0 ? (
+                  <p className="no-data">No hay datos de pilotos.</p>
+                ) : (
+                  <div className="ranking-list">
+                    {pilotos.map((piloto, index) => (
+                      <div key={piloto.id} className="ranking-item">
+                        <div className="ranking-position">
+                          <span className="position-number">{index + 1}</span>
+                        </div>
+                        <div className="ranking-info">
+                          <h3 className="ranking-name">{piloto.Nombre}</h3>
+                          <p className="ranking-team">{piloto.Equipo?.Nombre || 'Sin equipo'}</p>
+                        </div>
+                        <div className="ranking-points">
+                          <span className="points-number">{piloto.Puntos}</span>
+                          <span className="points-label">pts</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
 
-          <h2>Top 3 Equipos</h2>
-          {equipos.length === 0 ? (
-            <p>No hay datos de equipos.</p>
-          ) : (
-            <ul>
-              {equipos.map((equipo) => (
-                <li key={equipo.id}>{equipo.Nombre} - {equipo.Puntos} pts</li>
-              ))}
-            </ul>
-          )}
+          <div className="column">
+            <section className="dashboard-card equipos-card">
+              <div className="card-header">
+                <h2>Podio Equipos</h2>
+              </div>
+              <div className="card-content">
+                {equipos.length === 0 ? (
+                  <p className="no-data">No hay datos de equipos.</p>
+                ) : (
+                  <div className="ranking-list">
+                    {equipos.map((equipo, index) => (
+                      <div key={equipo.id} className="ranking-item">
+                        <div className="ranking-position">
+                          <span className="position-number">{index + 1}</span>
+                        </div>
+                        <div className="ranking-info">
+                          <h3 className="ranking-name">{equipo.Nombre}</h3>
+                          <p className="ranking-country">{equipo.Pais}</p>
+                        </div>
+                        <div className="ranking-points">
+                          <span className="points-number">{equipo.Puntos}</span>
+                          <span className="points-label">pts</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
 
+        <div className="actions-section">
           <button
-            onClick={() => navigate('/puestos')} // Cambia esta ruta según donde tengas el componente Puestos
+            onClick={() => navigate('/puestos')}
             className="btn-ver-mas"
           >
-            Ver más
+            Ver Clasificación Completa
           </button>
-        </section>
+        </div>
       </main>
       <Footer />
     </div>
