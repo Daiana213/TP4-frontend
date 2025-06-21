@@ -3,7 +3,7 @@ import './StandingsForm.css';
 import { apiService } from '../../../../config/api';
 
 export default function StandingsForm({ onStandingsChange, initialData = {}, mostrarSprint = true }) {
-  const [activeTab, setActiveTab] = useState('clasificacion'); // Corrección: declarado activeTab
+  const [activeTab, setActiveTab] = useState('carrera');
   const [standings, setStandings] = useState({
     clasificacion: [],
     sprint: [],
@@ -96,18 +96,24 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
       return;
     }
 
+    // Calcular puntos automáticamente
+    const puntos = getPuntos(type, idx);
+
     handlePositionChange(type, idx, 'piloto', piloto.Nombre);
     handlePositionChange(type, idx, 'equipo', piloto.Equipo?.Nombre || 'Sin equipo');
     handlePositionChange(type, idx, 'pilotoId', piloto.id);
-    handlePositionChange(type, idx, 'puntos', getPuntos(type, idx));
+    handlePositionChange(type, idx, 'puntos', puntos);
   };
 
   // Renderizar filas por tipo (clasificación, sprint, carrera)
   const renderRows = (type) => {
     if (type === 'sprint' && !mostrarSprint) return null;
     const max = type === 'sprint' ? 8 : 10;
+    
     return Array.from({ length: max }, (_, idx) => {
       const cur = standings[type][idx] || {};
+      const puntosAsignados = cur.puntos !== undefined ? cur.puntos : getPuntos(type, idx);
+      
       return (
         <tr key={idx} className={idx < 3 ? 'podium-row' : ''}>
           <td className="position">{idx + 1}</td>
@@ -116,6 +122,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
               value={cur.pilotoId || ''}
               disabled={loading}
               onChange={e => handlePilotoSelect(type, idx, e.target.value)}
+              className="piloto-select"
             >
               <option value="">Seleccionar piloto</option>
               {pilotos.map(p => (
@@ -131,16 +138,44 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
               placeholder="Tiempo"
               value={cur.tiempo || ''}
               onChange={e => handlePositionChange(type, idx, 'tiempo', e.target.value)}
+              className="time-input"
             />
           </td>
-          <td className="points">{cur.puntos || 0}</td>
+          <td className="points">
+            <div style={{
+              display: 'inline-block',
+              padding: '6px 12px',
+              backgroundColor: puntosAsignados > 0 ? '#007bff' : '#f8f9fa',
+              color: puntosAsignados > 0 ? 'white' : '#6c757d',
+              borderRadius: '6px',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              minWidth: '40px',
+              textAlign: 'center',
+              border: puntosAsignados === 0 ? '1px solid #dee2e6' : 'none',
+              boxShadow: puntosAsignados > 0 ? '0 2px 4px rgba(0,123,255,0.3)' : 'none'
+            }}>
+              {puntosAsignados}
+            </div>
+          </td>
         </tr>
       );
     });
   };
 
-  if (loading) return <div>Cargando pilotos...</div>;
-  if (error) return <div>Error: {error}</div>;
+  // Obtener información de puntos para mostrar
+  const getPuntosInfo = () => {
+    if (activeTab === 'clasificacion') {
+      return "La clasificación no otorga puntos en F1";
+    } else if (activeTab === 'sprint') {
+      return "Puntos Sprint: 8-7-6-5-4-3-2-1 (top 8)";
+    } else {
+      return "Puntos Carrera: 25-18-15-12-10-8-6-4-2-1 (top 10)";
+    }
+  };
+
+  if (loading) return <div className="loading">Cargando pilotos...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="standings-form">
@@ -170,17 +205,39 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
         </button>
       </div>
 
-      <table className="standings-table">
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Piloto</th>
-            <th>Tiempo</th>
-            <th>Puntos</th>
-          </tr>
-        </thead>
-        <tbody>{renderRows(activeTab)}</tbody>
-      </table>
+      <div className="standings-table-container">
+        <table className="standings-table">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Piloto</th>
+              <th>Tiempo</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>{renderRows(activeTab)}</tbody>
+        </table>
+      </div>
+
+      <div className="standings-info">
+        <div className="info-card">
+          <h4>Información de Puntos</h4>
+          <p>{getPuntosInfo()}</p>
+          {activeTab !== 'clasificacion' && (
+            <ul>
+              {activeTab === 'sprint' ? (
+                puntosSprint.map((puntos, idx) => (
+                  <li key={idx}>Posición {idx + 1}: {puntos} puntos</li>
+                ))
+              ) : (
+                puntosCarrera.map((puntos, idx) => (
+                  <li key={idx}>Posición {idx + 1}: {puntos} puntos</li>
+                ))
+              )}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

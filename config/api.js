@@ -148,7 +148,7 @@ export const apiService = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(pilotoData)
     });
@@ -161,7 +161,7 @@ export const apiService = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(pilotoData)
     });
@@ -173,7 +173,7 @@ export const apiService = {
     const response = await fetch(API_ENDPOINTS.adminPilotosById(id), {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     });
     if (!response.ok) throw new Error('Error al eliminar piloto');
@@ -191,7 +191,7 @@ export const apiService = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(equipoData)
     });
@@ -204,7 +204,7 @@ export const apiService = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(equipoData)
     });
@@ -216,7 +216,7 @@ export const apiService = {
     const response = await fetch(API_ENDPOINTS.adminEquiposById(id), {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     });
     if (!response.ok) throw new Error('Error al eliminar equipo');

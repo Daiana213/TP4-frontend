@@ -28,8 +28,11 @@ function Inicio() {
         ]);
 
         setCarreras(carrerasData);
+        // Ordenar y tomar top 3 pilotos por puntos descendente
         const pilotosTop = [...pilotosData].sort((a, b) => b.Puntos - a.Puntos).slice(0, 3);
         setPilotos(pilotosTop);
+
+        // Ordenar y tomar top 3 equipos por puntos descendente
         const equiposTop = [...equiposData].sort((a, b) => b.Puntos - a.Puntos).slice(0, 3);
         setEquipos(equiposTop);
 
@@ -46,6 +49,7 @@ function Inicio() {
   const formatearFecha = (fecha) =>
     new Date(fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
+  // Filtrar próximas dos carreras
   const hoy = new Date();
   const proximasCarreras = carreras
     .filter((carrera) => new Date(carrera.fecha) > hoy)
@@ -58,60 +62,56 @@ function Inicio() {
     <div className="inicio-container">
       <Header />
       <main>
-        <div>
-          <h1 className="titulo">Hola, {currentUser?.nombre || 'Usuario'}</h1>
+        <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
 
-          <section className="calendario">
-            <h2>Próximas Carreras</h2>
-            {proximasCarreras.length === 0 ? (
-              <p>No hay carreras próximas disponibles.</p>
-            ) : (
-              <div className="carreras-lista">
-                {proximasCarreras.map((carrera) => (
-                  <div key={carrera.id} className="carrera-card">
-                    <h3>Ronda {carrera.id} - {carrera.nombre}</h3>
-                    <p><strong>Fecha:</strong> {formatearFecha(carrera.fecha)}</p>
-                    <p><strong>País:</strong> {carrera.pais}</p>
-                    <p><strong>Circuito:</strong> {carrera.circuito}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-
-          <section className="ranking">
-            <h2>Top 3 Pilotos</h2>
-            {pilotos.length === 0 ? (
-              <p>No hay datos de pilotos.</p>
-            ) : (
-              pilotos.map((piloto) => (
-                <div key={piloto.id} className="ranking-card">
-                  <span className="nombre">{piloto.Nombre}</span>
-                  <span className="puntos">{piloto.Puntos} pts</span>
+        <section className="calendario">
+          <h2>Próximas Carreras</h2>
+          {proximasCarreras.length === 0 ? (
+            <p>No hay carreras próximas disponibles.</p>
+          ) : (
+            <div className="carreras-lista">
+              {proximasCarreras.map((carrera) => (
+                <div key={carrera.id} className="carrera-card">
+                  <h3>Ronda {carrera.ronda} - {carrera.nombre}</h3>
+                  <p><strong>Fecha:</strong> {formatearFecha(carrera.fecha)}</p>
+                  <p><strong>País:</strong> {carrera.pais}</p>
+                  <p><strong>Circuito:</strong> {carrera.circuito}</p>
                 </div>
-              ))
-            )}
+              ))}
+            </div>
+          )}
+        </section>
 
-            <h2>Top 3 Equipos</h2>
-            {equipos.length === 0 ? (
-              <p>No hay datos de equipos.</p>
-            ) : (
-              equipos.map((equipo) => (
-                <div key={equipo.id} className="ranking-card">
-                  <span className="nombre">{equipo.Nombre}</span>
-                  <span className="puntos">{equipo.Puntos} pts</span>
-                </div>
-              ))
-            )}
+        <section className="ranking">
+          <h2>Top 3 Pilotos</h2>
+          {pilotos.length === 0 ? (
+            <p>No hay datos de pilotos.</p>
+          ) : (
+            <ul>
+              {pilotos.map((piloto) => (
+                <li key={piloto.id}>{piloto.Nombre} - {piloto.Puntos} pts</li>
+              ))}
+            </ul>
+          )}
 
-            <button
-              onClick={() => navigate('/puestos')}
-              className="btn-ver-mas"
-            >
-              Ver más
-            </button>
-          </section>
-        </div>
+          <h2>Top 3 Equipos</h2>
+          {equipos.length === 0 ? (
+            <p>No hay datos de equipos.</p>
+          ) : (
+            <ul>
+              {equipos.map((equipo) => (
+                <li key={equipo.id}>{equipo.Nombre} - {equipo.Puntos} pts</li>
+              ))}
+            </ul>
+          )}
+
+          <button
+            onClick={() => navigate('/puestos')} // Cambia esta ruta según donde tengas el componente Puestos
+            className="btn-ver-mas"
+          >
+            Ver más
+          </button>
+        </section>
       </main>
       <Footer />
     </div>

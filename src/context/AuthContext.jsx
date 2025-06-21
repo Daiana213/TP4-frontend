@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     if (!token) {
       setLoading(false);
       return;
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   
 
   const login = (userData, token) => {
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('token', token);
     localStorage.setItem('userId', userData.id);
     localStorage.setItem('userEmail', userData.email);
     localStorage.setItem('userName', userData.nombre);
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userName');

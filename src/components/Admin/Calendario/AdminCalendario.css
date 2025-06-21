@@ -4,167 +4,195 @@ main{
 }
 
 .admin-container {
-    font-family: var(--font-primary);
-    background-color: var(--gray-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
     min-height: 100vh;
 }
   
 .titulo{
     text-align: center;
-    color: var(--text-color);
+    color: #1a1a1a;
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: 700;
-    font-family: var(--font-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
   
 .admin-content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: 2rem;
 }
   
 .admin-form-container {
-    background-color: var(--white);
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow);
-    padding: var(--spacing-md);
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
 }
   
 .admin-form-container h3 {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
 }
   
   .admin-forms-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
+    gap: 1rem;
+    margin-top: 1rem;
   }
   
   .admin-form {
-    background-color: var(--gray-light);
-    border-radius: var(--border-radius-sm);
-    padding: var(--spacing-sm);
-    box-shadow: var(--shadow);
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .admin-form .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 1rem;
   }
   
   .admin-form .form-group label {
-    font-size: var(--font-size-sm);
-    color: var(--text-light);
+    font-size: 0.9rem;
+    color: #495057;
     margin-bottom: 0.25rem;
+    font-weight: 600;
   }
   
   .admin-form .form-group input {
-    padding: var(--spacing-xs);
-    border: 1px solid var(--gray);
-    border-radius: var(--border-radius-sm);
-    font-size: var(--font-size-base);
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .admin-form .form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
   }
   
   .admin-form .form-actions {
     display: flex;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
+    gap: 0.75rem;
+    margin-top: 1rem;
   }
   
   .submit-btn,
   .cancel-btn,
   .edit-btn,
   .delete-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: 0.75rem 1rem;
     border: none;
-    border-radius: var(--border-radius-sm);
-    font-weight: bold;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
-    font-family: var(--font-primary);
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   .submit-btn {
-    background: var(--gradient);
-    color: var(--white);
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #ffffff;
   }
   
   .cancel-btn {
-    background-color: var(--gray);
-    color: var(--white);
+    background-color: #6c757d;
+    color: #ffffff;
   }
   
   .edit-btn {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: #007bff;
+    color: #ffffff;
   }
   
   .delete-btn {
-    background-color: var(--accent-color);
-    color: var(--white);
+    background-color: #dc3545;
+    color: #ffffff;
   }
   
   .submit-btn:hover,
   .cancel-btn:hover,
   .edit-btn:hover,
   .delete-btn:hover {
-    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
   .admin-list-container {
-    background-color: var(--white);
+    background-color: #ffffff;
     display: grid;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow);
-    padding: var(--spacing-md);
-    margin-top: var(--spacing-md);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-top: 1rem;
   }
   
   .admin-list-container h3 {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
   }
   
   .admin-list {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
   
   .admin-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--gray-light);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-    box-shadow: var(--shadow);
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .admin-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
   
   .admin-item-info p {
     margin: 0.25rem 0;
-    font-size: var(--font-size-sm);
-    color: var(--text-color);
+    font-size: 0.9rem;
+    color: #495057;
+  }
+  
+  .admin-item-info p:first-child {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
   }
   
   .admin-item-actions {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: 0.5rem;
   }
   
   .loading,
   .error {
     text-align: center;
-    font-size: var(--font-size-lg);
-    color: var(--text-light);
-    margin-top: var(--spacing-lg);
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-top: 2rem;
+  }
+  
+  .error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
   }
   
   @media (min-width: 768px) {
@@ -175,5 +203,18 @@ main{
     .admin-form-container,
     .admin-list-container {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .admin-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .admin-item-actions {
+      width: 100%;
+      justify-content: flex-end;
     }
   }

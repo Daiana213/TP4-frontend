@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gray-color);
 }
 
 .editar-content {
@@ -16,7 +16,7 @@
 .editar-content h2 {
   text-align: center;
   margin-bottom: 2rem;
-  color: white;
+  color: var(--font-primary);
   font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);

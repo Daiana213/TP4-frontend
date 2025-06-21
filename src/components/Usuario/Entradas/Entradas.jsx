@@ -74,7 +74,7 @@ const Entradas = () => {
 
         {entradas.length === 0 ? (
           <div className="empty-state">
-            <p>No hay entradas disponibles.</p>
+          <p>No hay entradas disponibles.</p>
             <p>¡Crea tu primera entrada para comenzar tu diario de carreras!</p>
           </div>
         ) : (
@@ -82,7 +82,7 @@ const Entradas = () => {
             {entradas.map((entrada) => (
               <div className="entrada-card" key={entrada.id}>
                 <div className="entrada-header">
-                  <h3>{entrada.Titulo}</h3>
+                <h3>{entrada.Titulo}</h3>
                   <span className="entrada-date">{formatDate(entrada.fechacreacion)}</span>
                 </div>
                 
@@ -122,8 +122,8 @@ const Entradas = () => {
                     className="boton-detalle" 
                     onClick={() => navigate(`/detalleentrada/${entrada.id}`)}
                   >
-                    Ver Detalle
-                  </button>
+                  Ver Detalle
+                </button>
                   <button 
                     className="boton-editar" 
                     onClick={() => navigate(`/editarentrada/${entrada.id}`)}
