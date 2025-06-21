@@ -30,7 +30,7 @@ function Equipos() {
   return (
     <div className="equipos-container">
       <Header />
-      <h1 className="tituloequipo">Equipos 2025</h1>
+      <h1 className="tituloequipo">EQUIPOS 2025</h1>
       <main>
         <div className="equipos-grid">
           {equipos.map((equipo) => (

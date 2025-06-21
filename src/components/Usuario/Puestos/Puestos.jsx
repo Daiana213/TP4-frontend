@@ -46,10 +46,10 @@ export default function Puestos({ ordenarDescendente = true }) {
     <div className="puestos-container">
       <Header />
       <main className="puestos-main">
-        <h2 className="puestos-titulo">Puestos de Pilotos y Equipos</h2>
+        <h2 className="puestos-titulo">STANDINGS</h2>
 
         <button className="boton-orden" onClick={() => setOrdenDesc(!ordenDesc)}>
-          Ordenar puntos: {ordenDesc ? 'Mayor a menor' : 'Menor a mayor'}
+          Ordenar puntos: {ordenDesc ? 'Menor a mayor' : 'Mayor a menor'}
         </button>
 
         <section className="tabla-seccion">

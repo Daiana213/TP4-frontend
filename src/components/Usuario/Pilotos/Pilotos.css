@@ -7,7 +7,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 5px white;
-
+  background-color: beige;
 }
 
 .grid-pilotos {
@@ -35,7 +35,7 @@
   margin-bottom: 10px;
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: var(--primary-color);
   font-family: var(--font-primary);
   padding: 1rem;
 }

@@ -7,22 +7,21 @@
   font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 5px white;
+  background-color: beige;
 }
 
-/* GRILLA RESPONSIVE */
 .equipos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   padding: 2rem;
   width: 100%;
-  max-width: 1200px; /* opcional */
+  max-width: 1200px; 
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 
-/* Tarjeta de cada equipo */
 .equipo-card {
   background-color: var(--gray-light);
   color: var(--text-color);
@@ -42,6 +41,7 @@
   margin-bottom: 1rem;
   font-family: var(--font-primary);
   text-align: center;
+  color: var(--primary-color);
 }
 
 .equipo-info p {
