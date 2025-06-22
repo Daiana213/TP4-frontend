@@ -37,7 +37,7 @@ function Pilotos() {
     <div className="pilotos-container">
       <Header />
       <h1 className="titulopiloto">PILOTOS 2025</h1>
-      <main>
+      <main className="mainpilotos">
         <div className="grid-pilotos">
           {pilotos.map((piloto, index) => (
             <div key={index} className="piloto-card">

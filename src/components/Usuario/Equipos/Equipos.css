@@ -3,11 +3,14 @@
   padding-top: 1.5rem;
   padding-left: 1.5rem;
   text-align: center;
-  color: var(--secondary-color);
-  font-size: 2.5rem;
+  color: var(--primary-color);
+  font-size: 2rem;
   font-weight: 700;
-  text-shadow: 2px 2px 5px white;
-  background-color: beige;
+  background-color: var(--background-color);
+}
+
+.mainequipo{
+  background-color: var(--background-color);
 }
 
 .equipos-grid {
@@ -41,7 +44,7 @@
   margin-bottom: 1rem;
   font-family: var(--font-primary);
   text-align: center;
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .equipo-info p {

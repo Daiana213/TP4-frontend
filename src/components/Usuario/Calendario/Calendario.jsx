@@ -42,7 +42,7 @@ function Calendario() {
     <div className="calendario-container">
       <Header />
       <h1 className="titulocalendario">CALENDARIO 2025</h1>
-      <main>
+      <main className="maincalendario">
         <div className="calendario-grid">
           {calendario.map((granPremio) => (
             <div key={granPremio.id} className="granpremio-card">

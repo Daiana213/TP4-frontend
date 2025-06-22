@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
 import { apiService } from '../../../../config/api';
+import './Puestos.css';
 
 export default function Puestos({ ordenarDescendente = true }) {
   const [pilotos, setPilotos] = useState([]);
@@ -15,12 +16,10 @@ export default function Puestos({ ordenarDescendente = true }) {
       try {
         setCargando(true);
         setError(null);
-
         const [pilotosData, equiposData] = await Promise.all([
           apiService.obtenerPilotos(),
           apiService.obtenerEquipos()
         ]);
-
         setPilotos(pilotosData);
         setEquipos(equiposData);
       } catch (err) {
@@ -29,7 +28,6 @@ export default function Puestos({ ordenarDescendente = true }) {
         setCargando(false);
       }
     };
-
     fetchDatos();
   }, []);
 
@@ -38,9 +36,6 @@ export default function Puestos({ ordenarDescendente = true }) {
       ordenDesc ? b.Puntos - a.Puntos : a.Puntos - b.Puntos
     );
   };
-
-  if (cargando) return <div className="puestos-cargando">Cargando datos...</div>;
-  if (error) return <div className="puestos-error">{error}</div>;
 
   return (
     <div className="puestos-container">
@@ -52,45 +47,36 @@ export default function Puestos({ ordenarDescendente = true }) {
           Ordenar puntos: {ordenDesc ? 'Menor a mayor' : 'Mayor a menor'}
         </button>
 
-        <section className="tabla-seccion">
-          <h3>Pilotos</h3>
-          <table className="tabla-puntos">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Puntos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ordenarLista(pilotos).map((piloto) => (
-                <tr key={piloto.id}>
-                  <td>{piloto.Nombre || piloto.nombre}</td>
-                  <td>{piloto.Puntos}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+        {cargando && <div className="puestos-cargando">Cargando datos...</div>}
+        {error && <div className="puestos-error">{error}</div>}
 
-        <section className="tabla-seccion">
-          <h3>Equipos</h3>
-          <table className="tabla-puntos">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Puntos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ordenarLista(equipos).map((equipo) => (
-                <tr key={equipo.id}>
-                  <td>{equipo.Nombre || equipo.nombre}</td>
-                  <td>{equipo.Puntos}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+        {!cargando && !error && (
+          <>
+            <section className="tabla-seccion">
+              <h3>Standings Pilotos</h3>
+              <ul className="ranking-lista">
+                {ordenarLista(pilotos).map((piloto, index) => (
+                  <li className="ranking-item" key={piloto.id}>
+                    <span className="ranking-nombre">{piloto.Nombre || piloto.nombre}</span>
+                    <span className="ranking-puntos">{piloto.Puntos}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="tabla-seccion">
+              <h3>Standings equipos</h3>
+              <ul className="ranking-lista">
+                {ordenarLista(equipos).map((equipo) => (
+                  <li className="ranking-item" key={equipo.id}>
+                    <span className="ranking-nombre">{equipo.Nombre || equipo.nombre}</span>
+                    <span className="ranking-puntos">{equipo.Puntos}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
       </main>
       <Footer />
     </div>
