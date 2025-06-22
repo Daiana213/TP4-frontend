@@ -1,0 +1,114 @@
+/* Importar estilos base */
+@import '../AdminList.css';
+
+/* Personalizaciones específicas para equipos */
+.admin-equipo-item {
+  border-left: 4px solid #dc3545;
+}
+
+.admin-equipo-item:hover {
+  border-left-color: #c82333;
+}
+
+/* Estilos para estadísticas de equipos */
+.equipo-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.equipo-stat {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.equipo-stat.puntos {
+  background: #d4edda;
+  color: #155724;
+}
+
+.equipo-stat.podios {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.equipo-stat.carreras {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.equipo-stat.victorias {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* Estilos para información del equipo */
+.equipo-info {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #dc3545;
+  margin: 5px 0;
+}
+
+.equipo-pais {
+  background: #fd7e14;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.equipo-chief {
+  background: #6f42c1;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+  margin: 2px 4px;
+}
+
+.equipo-technical {
+  background: #20c997;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+  margin: 2px 4px;
+}
+
+/* Estilos para información de staff */
+.staff-info {
+  background: #e9ecef;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin: 3px 0;
+  font-size: 0.9rem;
+}
+
+/* Responsive específico para equipos */
+@media (max-width: 768px) {
+  .equipo-stats {
+    justify-content: center;
+  }
+  
+  .equipo-pais,
+  .equipo-chief,
+  .equipo-technical {
+    display: block;
+    margin: 5px 0;
+    text-align: center;
+  }
+  
+  .staff-info {
+    text-align: center;
+  }
+} 

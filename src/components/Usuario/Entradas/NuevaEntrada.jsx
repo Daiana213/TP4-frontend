@@ -81,7 +81,7 @@ export default function NuevaEntrada() {
   };
 
   return (
-    <div className="Nueva-conteiner">
+    <div className="Nueva-container">
       <Header />
       <main className="nueva-entrada-content">
         <h2>Nueva Entrada del Gran Premio</h2>

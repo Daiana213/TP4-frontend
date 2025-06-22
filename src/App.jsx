@@ -7,7 +7,7 @@ import Pilotos from './components/Usuario/Pilotos/Pilotos';
 import Equipos from './components/Usuario/Equipos/Equipos';
 import Calendario from './components/Usuario/Calendario/Calendario';
 import Entradas from './components/Usuario/Entradas/Entradas';
-import Admin from './components/Admin/AdminHeader';
+import Admin from './components/Admin/Inicio/Admin';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import { AuthProvider } from './context/AuthContext';

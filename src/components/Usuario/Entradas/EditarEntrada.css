@@ -181,6 +181,27 @@
   box-shadow: none;
 }
 
+.btn-volver {
+  background: var(--secondary-color);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 140px;
+}
+
+.btn-volver:hover {
+  background: #aa0000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(170, 0, 0, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .editar-content {

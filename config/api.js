@@ -23,9 +23,9 @@ export const API_ENDPOINTS = {
   adminPilotosById: (id) => `${API_BASE_URL}/admin/pilotos/${id}`,
   
   equipos: `${API_BASE_URL}/equipos`,
-
   adminEquipos: `${API_BASE_URL}/admin/equipos`,
   adminEquiposById: (id) => `${API_BASE_URL}/admin/equipos/${id}`,
+  
   // Calendario
   calendario: `${API_BASE_URL}/calendario`,
   calendarioById: (id) => `${API_BASE_URL}/calendario/${id}`,
@@ -240,7 +240,8 @@ export const apiService = {
     const response = await fetch(API_ENDPOINTS.adminCalendario, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(granPremioData)
     });
@@ -252,7 +253,8 @@ export const apiService = {
     const response = await fetch(API_ENDPOINTS.adminCalendarioById(id), {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(granPremioData)
     });
@@ -262,7 +264,10 @@ export const apiService = {
 
   eliminarGranPremio: async (id) => {
     const response = await fetch(API_ENDPOINTS.adminCalendarioById(id), {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     });
     if (!response.ok) throw new Error('Error al eliminar gran premio');
     return response.json();

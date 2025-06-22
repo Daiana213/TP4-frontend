@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { API_ENDPOINTS } from '../../../config/api';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 import { apiService } from '../../../config/api';
