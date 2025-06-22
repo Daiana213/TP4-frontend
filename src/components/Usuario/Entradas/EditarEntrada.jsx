@@ -154,8 +154,7 @@ export default function EditarEntrada() {
                 name="GranPremioId"
                 type="number"
                 value={entrada.GranPremioId || ''}
-                onChange={handleChange}
-                required
+                readOnly
               />
             </div>
 

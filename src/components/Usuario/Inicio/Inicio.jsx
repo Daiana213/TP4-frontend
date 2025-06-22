@@ -62,7 +62,7 @@ function Inicio() {
     <div className="inicio-container">
       <Header />
       <main>
-        <h1 className="titulo">Hola, {user?.nombre || 'Usuario'}</h1>
+        <h1 className="titulo">Hola, {currentUser?.nombre || 'Usuario'}</h1>
 
         <section className="calendario">
           <h2>Próximas Carreras</h2>

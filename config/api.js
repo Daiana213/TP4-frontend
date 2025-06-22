@@ -266,5 +266,22 @@ export const apiService = {
     });
     if (!response.ok) throw new Error('Error al eliminar gran premio');
     return response.json();
+  },
+
+  obtenerGranPremios: async () => {
+    const response = await fetch(API_ENDPOINTS.calendario);
+    if (!response.ok) throw new Error('Error al obtener el calendario de Grandes Premios');
+    return response.json(); // Devuelve el array completo del calendario
+  },
+
+  obtenerEntradasDelUsuario: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(API_ENDPOINTS.entradas, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al obtener las entradas del usuario');
+    return response.json(); // Devuelve el array de entradas del usuario autenticado
   }
 };
