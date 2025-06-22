@@ -61,58 +61,107 @@ function Inicio() {
   return (
     <div className="inicio-container">
       <Header />
-      <main>
-        <h1 className="titulo">Hola, {currentUser?.nombre || 'Usuario'}</h1>
+      <div className="inicio-main">
+        <div className="welcome-section">
+          <h1 className="titulo">Hola, {currentUser?.nombre || 'Usuario'}</h1>
+        </div>
 
-        <section className="calendario">
-          <h2>Próximas Carreras</h2>
-          {proximasCarreras.length === 0 ? (
-            <p>No hay carreras próximas disponibles.</p>
-          ) : (
-            <div className="carreras-lista">
-              {proximasCarreras.map((carrera) => (
-                <div key={carrera.id} className="carrera-card">
-                  <h3>Ronda {carrera.ronda} - {carrera.nombre}</h3>
-                  <p><strong>Fecha:</strong> {formatearFecha(carrera.fecha)}</p>
-                  <p><strong>País:</strong> {carrera.pais}</p>
-                  <p><strong>Circuito:</strong> {carrera.circuito}</p>
-                </div>
-              ))}
+        <div className="main-content-grid">
+          <div className="column">
+            <div className="dashboard-card">
+              <div className="card-header">
+                <h2>Próximas Carreras</h2>
+              </div>
+              <div className="card-content">
+                {proximasCarreras.length === 0 ? (
+                  <div className="no-data">No hay carreras próximas disponibles.</div>
+                ) : (
+                  <div className="carreras-lista">
+                    {proximasCarreras.map((carrera) => (
+                      <div key={carrera.id} className="carrera-item">
+                        <div className="carrera-header">
+                          <span className="carrera-round">Ronda {carrera.ronda}</span>
+                          <span className="carrera-date">{formatearFecha(carrera.fecha)}</span>
+                        </div>
+                        <div className="carrera-name">{carrera.nombre}</div>
+                        <div className="carrera-details">
+                          <span className="carrera-country">{carrera.pais}</span>
+                          <span className="carrera-circuit">{carrera.circuito}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </section>
+          </div>
 
-        <section className="ranking">
-          <h2>Top 3 Pilotos</h2>
-          {pilotos.length === 0 ? (
-            <p>No hay datos de pilotos.</p>
-          ) : (
-            <ul>
-              {pilotos.map((piloto) => (
-                <li key={piloto.id}>{piloto.Nombre} - {piloto.Puntos} pts</li>
-              ))}
-            </ul>
-          )}
+          <div className="column">
+            <div className="dashboard-card">
+              <div className="card-header">
+                <h2>Top 3 Pilotos</h2>
+              </div>
+              <div className="card-content">
+                {pilotos.length === 0 ? (
+                  <div className="no-data">No hay datos de pilotos.</div>
+                ) : (
+                  <div className="ranking-list">
+                    {pilotos.map((piloto, index) => (
+                      <div key={piloto.id} className="ranking-item">
+                        <div className="ranking-info">
+                          <div className="ranking-position">{index + 1}</div>
+                          <div className="ranking-name">{piloto.Nombre}</div>
+                        </div>
+                        <div className="ranking-points">
+                          <div className="points-number">{piloto.Puntos}</div>
+                          <div className="points-label">pts</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
 
-          <h2>Top 3 Equipos</h2>
-          {equipos.length === 0 ? (
-            <p>No hay datos de equipos.</p>
-          ) : (
-            <ul>
-              {equipos.map((equipo) => (
-                <li key={equipo.id}>{equipo.Nombre} - {equipo.Puntos} pts</li>
-              ))}
-            </ul>
-          )}
+          <div className="column">
+            <div className="dashboard-card">
+              <div className="card-header">
+                <h2>Top 3 Equipos</h2>
+              </div>
+              <div className="card-content">
+                {equipos.length === 0 ? (
+                  <div className="no-data">No hay datos de equipos.</div>
+                ) : (
+                  <div className="ranking-list">
+                    {equipos.map((equipo, index) => (
+                      <div key={equipo.id} className="ranking-item">
+                        <div className="ranking-info">
+                          <div className="ranking-position">{index + 1}</div>
+                          <div className="ranking-name">{equipo.Nombre}</div>
+                        </div>
+                        <div className="ranking-points">
+                          <div className="points-number">{equipo.Puntos}</div>
+                          <div className="points-label">pts</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div className="actions-section">
           <button
-            onClick={() => navigate('/puestos')} // Cambia esta ruta según donde tengas el componente Puestos
+            onClick={() => navigate('/puestos')}
             className="btn-ver-mas"
           >
             Ver más
           </button>
-        </section>
-      </main>
+        </div>
+      </div>
       <Footer />
     </div>
   );

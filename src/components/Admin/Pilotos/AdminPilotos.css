@@ -1,0 +1,106 @@
+
+/* Importar estilos base */
+@import '../AdminList.css';
+
+/* Personalizaciones específicas para pilotos */
+.admin-piloto-item {
+  border-left: 4px solid #28a745;
+}
+
+.admin-piloto-item:hover {
+  border-left-color: #218838;
+}
+
+/* Estilos para estadísticas de pilotos */
+.piloto-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.piloto-stat {
+  background: #e8f5e8;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.piloto-stat.campeonatos {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.piloto-stat.victorias {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.piloto-stat.podios {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.piloto-stat.puntos {
+  background: #d4edda;
+  color: #155724;
+}
+
+.piloto-stat.carreras {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+/* Estilos para información del piloto */
+.piloto-info {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #28a745;
+  margin: 5px 0;
+}
+
+.piloto-numero {
+  background: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.piloto-equipo {
+  background: #6f42c1;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.piloto-pais {
+  background: #fd7e14;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Responsive específico para pilotos */
+@media (max-width: 768px) {
+  .piloto-stats {
+    justify-content: center;
+  }
+  
+  .piloto-numero,
+  .piloto-equipo,
+  .piloto-pais {
+    display: block;
+    margin: 5px 0;
+    text-align: center;
+  }
+} 
