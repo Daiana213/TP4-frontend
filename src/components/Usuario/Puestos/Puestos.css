@@ -43,6 +43,21 @@
     background-color: #0056b3;
   }
   
+  .boton-orden {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-orden:hover {
+    background-color: #218838;
+  }
+  
   .mensaje {
     color: green;
     margin-bottom: 1rem;

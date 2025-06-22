@@ -13,13 +13,15 @@
     flex: 1;
     padding: var(--spacing-lg);
     background-color: var(--gray-light);
-    padding: 1.2rem 1.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     margin: var(--spacing-md);
     border-radius: var(--border-radius-md);
-    max-width: 1200px;
+    max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
+    display: grid;
+    grid-template-columns: 300px 1fr 200px;
+    gap: 2rem;
   }
   
   .loading-container {
@@ -53,22 +55,22 @@
     flex-wrap: wrap;
   }
   
-  .gran-premio {
-    background: var(--primary-color);
+  .gran-premio,
+  .fecha-gp {
     color: white;
     padding: 8px 16px;
     border-radius: 20px;
     font-weight: 600;
     font-size: 1.1rem;
+    text-align: center;
   }
   
-  .fecha {
-    background: var(--secondary-color);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 1.1rem;
+  .gran-premio {
+    background: var(--primary-color);
+  }
+  
+  .fecha-gp {
+    background: var(--gray-dark);
   }
   
   .entrada-content {
@@ -95,14 +97,10 @@
     color: var(--secondary-color);
     margin-bottom: 1rem;
     font-size: 1.3rem;
-    font-weight: 600;
   }
   
   .info-section p {
-    font-size: var(--font-size-base);
-    line-height: 1.6;
     color: var(--secondary-color);
-    margin: 0;
   }
   
   .standings-container {
@@ -121,7 +119,7 @@
   }
   
   .standings-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   
   .standings-title {
@@ -348,5 +346,72 @@
     .standings-table-container {
       padding: 0.5rem;
     }
+  }
+  
+  .columna-info-gp,
+  .columna-resultados,
+  .columna-acciones {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .columna-info-gp {
+    gap: 1.5rem;
+    justify-content: flex-start;
+    border-right: 2px solid var(--primary-color);
+    padding-right: 2rem;
+  }
+  
+  .titulo-gp {
+    background: var(--gray-dark);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .info-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .info-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  .info-section p {
+    color: var(--secondary-color);
+  }
+  
+  .columna-resultados {
+    gap: 1.5rem;
+  }
+  
+  .columna-resultados > h3 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .standings-section {
+    margin-bottom: 1rem;
+  }
+  
+  .columna-acciones {
+    justify-content: center;
+    gap: 1rem;
+    border-left: 2px solid var(--secondary-color);
+    padding-left: 2rem;
+  }
+  
+  .btn {
+    width: 100%;
   }
   

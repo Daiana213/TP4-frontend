@@ -1,8 +1,7 @@
-.Entrada-conteiner {
+.Entrada-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url('../../assets/fondo-f1.webp'); /* o la ruta correcta */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -10,16 +9,34 @@
   font-family: var(--font-primary);
 }
 
-.tituloentradas{
-  font-family: var(--font-primary);
-  padding-top: 1.5rem;
-  padding-left: 1.5rem;
+.entradas-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.entradas-header {
   text-align: center;
-  color: var(--secondary-color);
-  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.titulo-entradas {
+  font-family: var(--font-primary);
+  color: var(--font-primary);
+  font-size: 3.5rem;
+  line-height: 1.2;
   font-weight: 700;
-  text-shadow: 2px 2px 5px white;
   margin-bottom: 1rem;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.entradas-main-content {
+  flex: 1;
 }
 
 .boton-crear {
@@ -251,7 +268,7 @@
     flex-direction: column;
   }
   
-  .tituloentradas {
+  .titulo-entradas {
     font-size: 2rem;
     padding: 1rem;
   }
@@ -269,4 +286,8 @@
   .entrada-actions {
     gap: 0.25rem;
   }
+}
+
+.entradas-grid-container {
+  width: 100%;
 }

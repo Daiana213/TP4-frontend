@@ -49,7 +49,7 @@ const Entradas = () => {
 
   if (loading) {
     return (
-      <div className="Entrada-conteiner">
+      <div className="Entrada-container">
         <Header />
         <main>
           <div className="loading-container">
@@ -62,79 +62,77 @@ const Entradas = () => {
   }
 
   return (
-    <div className="Entrada-conteiner">
+    <div className="Entrada-container">
       <Header />
-      <main>
-        <h2 className="tituloentradas">Mi Diario de Carreras</h2>
-        <button className="boton-crear" onClick={() => navigate('/nuevaentrada')}>
-          Crear Nueva Entrada
-        </button>
+      <main className="entradas-content">
+        <div className="entradas-header">
+          <h2 className="titulo-entradas">Mi Diario de Carreras</h2>
+          <button className="boton-crear" onClick={() => navigate('/nuevaentrada')}>
+            Crear Nueva Entrada
+          </button>
+        </div>
 
-        {error && <p className="error-message">{error}</p>}
+        <div className="entradas-grid-container">
+          {error && <p className="error-message">{error}</p>}
 
-        {entradas.length === 0 ? (
-          <div className="empty-state">
-          <p>No hay entradas disponibles.</p>
-            <p>¡Crea tu primera entrada para comenzar tu diario de carreras!</p>
-          </div>
-        ) : (
-          <div className="grid-entradas">
-            {entradas.map((entrada) => (
-              <div className="entrada-card" key={entrada.id}>
-                <div className="entrada-header">
-                <h3>{entrada.Titulo}</h3>
-                  <span className="entrada-date">{formatDate(entrada.fechacreacion)}</span>
-                </div>
-                
-                <div className="entrada-info">
-                  <p className="gran-premio">
-                    <strong>Gran Premio:</strong> {entrada.GranPremio?.nombre || `#${entrada.GranPremioId}`}
-                  </p>
-                  
-                  {entrada.resumengeneral && (
-                    <p className="resumen">
-                      <strong>Resumen:</strong> {entrada.resumengeneral.length > 100 
-                        ? `${entrada.resumengeneral.substring(0, 100)}...` 
-                        : entrada.resumengeneral}
-                    </p>
-                  )}
-                </div>
-
-                {hasStandingsData(entrada) && (
-                  <div className="standings-info">
-                    <h4>Datos de Puestos ({getStandingsCount(entrada)}/3)</h4>
-                    <div className="standings-badges">
-                      {entrada.Carrera && (
-                        <span className="badge carrera">Carrera</span>
-                      )}
-                      {entrada.Clasificacion && (
-                        <span className="badge clasificacion">Clasificación</span>
-                      )}
-                      {entrada.Sprint && (
-                        <span className="badge sprint">Sprint</span>
-                      )}
-                    </div>
+          {entradas.length === 0 ? (
+            <div className="empty-state">
+              <p>No hay entradas disponibles.</p>
+              <p>¡Crea tu primera entrada para comenzar tu diario de carreras!</p>
+            </div>
+          ) : (
+            <div className="grid-entradas">
+              {entradas.map((entrada) => (
+                <div className="entrada-card" key={entrada.id}>
+                  <div className="entrada-header">
+                    <h3>{entrada.Titulo}</h3>
+                    <span className="entrada-date">{formatDate(entrada.fechacreacion)}</span>
                   </div>
-                )}
+                  
+                  <div className="entrada-info">
+                    <p className="gran-premio">
+                      <strong>Gran Premio:</strong> {entrada.GranPremio?.nombre || `#${entrada.GranPremioId}`}
+                    </p>
+                    
+                    {entrada.resumengeneral && (
+                      <p className="resumen">
+                        <strong>Resumen:</strong> {entrada.resumengeneral.length > 100 
+                          ? `${entrada.resumengeneral.substring(0, 100)}...` 
+                          : entrada.resumengeneral}
+                      </p>
+                    )}
+                  </div>
 
-                <div className="entrada-actions">
-                  <button 
-                    className="boton-detalle" 
-                    onClick={() => navigate(`/detalleentrada/${entrada.id}`)}
-                  >
-                  Ver Detalle
-                </button>
-                  <button 
-                    className="boton-editar" 
-                    onClick={() => navigate(`/editarentrada/${entrada.id}`)}
-                  >
-                    Editar
-                  </button>
+                  {hasStandingsData(entrada) && (
+                    <div className="standings-info">
+                      <h4>Datos de Puestos ({getStandingsCount(entrada)}/3)</h4>
+                      <div className="standings-badges">
+                        {entrada.Carrera && <span className="badge carrera">Carrera</span>}
+                        {entrada.Clasificacion && <span className="badge clasificacion">Clasificación</span>}
+                        {entrada.Sprint && <span className="badge sprint">Sprint</span>}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="entrada-actions">
+                    <button 
+                      className="boton-detalle" 
+                      onClick={() => navigate(`/detalleentrada/${entrada.id}`)}
+                    >
+                      Ver Detalle
+                    </button>
+                    <button 
+                      className="boton-editar" 
+                      onClick={() => navigate(`/editarentrada/${entrada.id}`)}
+                    >
+                      Editar
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </main>
       <Footer />
     </div>

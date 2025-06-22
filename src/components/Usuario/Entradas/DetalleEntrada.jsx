@@ -107,39 +107,33 @@ const DetalleEntrada = () => {
     <div className="detalle-entrada-container">
       <Header />
       <main className="detalle-content">
-        <div className="entrada-header">
-          <div className="entrada-meta">
-            <h2>{entrada.Titulo}</h2>
-            <span className="gran-premio">
-              {entrada.GranPremio?.nombre || `Gran Premio #${entrada.GranPremioId}`}
-            </span>
-            <span className="fecha">{formatDate(entrada.fechacreacion)}</span>
+        {/* Columna Izquierda: Info GP */}
+        <div className="columna-info-gp">
+          <h2 className="titulo-gp">{entrada.Titulo}</h2>
+          <span className="gran-premio">
+            {entrada.GranPremio?.nombre || `Gran Premio #${entrada.GranPremioId}`}
+          </span>
+          <span className="fecha-gp">{formatDate(entrada.fechacreacion)}</span>
+          <div className="info-section">
+            <h3>Resumen General</h3>
+            <p>{entrada.resumengeneral || 'No hay resumen disponible'}</p>
+          </div>
+          <div className="info-section">
+            <h3>Notas Personales</h3>
+            <p>{entrada.notaspersonales || 'No hay notas personales'}</p>
           </div>
         </div>
 
-        <div className="entrada-content">
-        <div className="entrada-info">
-            <div className="info-section">
-              <h3>Resumen General</h3>
-              <p>{entrada.resumengeneral || 'No hay resumen disponible'}</p>
-            </div>
-
-            <div className="info-section">
-              <h3>Notas Personales</h3>
-              <p>{entrada.notaspersonales || 'No hay notas personales'}</p>
-            </div>
-          </div>
-
-          <div className="standings-container">
-            <h3>Resultados del Gran Premio</h3>
-            
-            {renderStandingsTable(entrada.Clasificacion?.standings, 'Clasificación', 'clasificacion')}
-            {renderStandingsTable(entrada.Sprint?.standings, 'Sprint', 'sprint')}
-            {renderStandingsTable(entrada.Carrera?.standings, 'Carrera', 'carrera')}
-          </div>
+        {/* Columna Central: Resultados */}
+        <div className="columna-resultados">
+          <h3>Resultados del Gran Premio</h3>
+          {renderStandingsTable(entrada.Clasificacion?.standings, 'Clasificación', 'clasificacion')}
+          {renderStandingsTable(entrada.Sprint?.standings, 'Sprint', 'sprint')}
+          {renderStandingsTable(entrada.Carrera?.standings, 'Carrera', 'carrera')}
         </div>
 
-        <div className="detalle-botones">
+        {/* Columna Derecha: Acciones */}
+        <div className="columna-acciones">
           <button className="btn editar" onClick={() => navigate(`/editarentrada/${entrada.id || id}`)}>
             Editar Entrada
           </button>
