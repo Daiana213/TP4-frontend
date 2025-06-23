@@ -1,109 +1,57 @@
 .admin-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f4f6f9;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: #f1f1f1;
   font-family: 'Segoe UI', sans-serif;
 }
 
 .admin-main {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .admin-title {
   font-size: 2.5rem;
-  color: #1a1a1a;
-  margin-bottom: 15px;
-  font-weight: 700;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e10600;
+  padding-bottom: 0.5rem;
+  color: #e10600;
 }
 
 .admin-desc {
-  color: #555;
-  font-size: 1.1rem;
-  margin-bottom: 40px;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ccc;
 }
 
 .admin-actions {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  max-width: 500px;
-  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
 .admin-btn {
+  background-color: #1c1f26;
+  border: 1px solid #333;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #f1f1f1;
+  font-size: 1rem;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: #ffffff;
-  padding: 16px 24px;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-  width: 100%;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
+  gap: 0.5rem;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .admin-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-  background: linear-gradient(135deg, #0056b3, #004085);
-}
-
-.admin-btn .material-icons {
-  font-size: 24px;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .admin-main {
-    margin: 20px;
-    padding: 24px;
-  }
-
-  .admin-title {
-    font-size: 2rem;
-  }
-
-  .admin-desc {
-    font-size: 1rem;
-    margin-bottom: 30px;
-  }
-
-  .admin-btn {
-    padding: 14px 20px;
-    font-size: 1rem;
-  }
-
-  .admin-btn .material-icons {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .admin-main {
-    margin: 15px;
-    padding: 20px;
-  }
-
-  .admin-title {
-    font-size: 1.8rem;
-  }
-
-  .admin-actions {
-    gap: 16px;
-  }
+  background-color: #e10600;
+  color: #fff;
+  transform: scale(1.05);
 }

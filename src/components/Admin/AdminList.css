@@ -2,7 +2,7 @@
 
 .admin-container {
   min-height: 100vh;
-  background: var(--gray-color);
+  background: var(--background-color);
   color: #333;
   display: flex;
   flex-direction: column;
@@ -32,6 +32,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-top: 20px;
+  min-height: 600px;
+  height: 70vh;
 }
 
 /* ===== FORMULARIO ===== */
@@ -40,7 +42,7 @@
   border-radius: 15px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  height: fit-content;
+  height: 100%;
   position: sticky;
   top: 20px;
 }
@@ -143,6 +145,9 @@
   border-radius: 15px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-list-container h3 {
@@ -154,11 +159,11 @@
 }
 
 .admin-list {
+  flex: 1 1 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 860px;
-  overflow-y: auto;
 }
 
 .admin-item {
