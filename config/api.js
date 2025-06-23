@@ -281,10 +281,12 @@ export const apiService = {
 
   obtenerEntradasDelUsuario: async () => {
     const token = localStorage.getItem('token');
+    console.log('Token en obtenerEntradasDelUsuario:', token);
     const response = await fetch(API_ENDPOINTS.entradas, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
     if (!response.ok) throw new Error('Error al obtener las entradas del usuario');
     return response.json(); // Devuelve el array de entradas del usuario autenticado

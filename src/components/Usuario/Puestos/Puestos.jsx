@@ -38,8 +38,9 @@ export default function Puestos({ ordenarDescendente = true }) {
   };
 
   return (
-    <div className="puestos-container">
+    <div className="container-exterior">
       <Header />
+    <div className="puestos-container">
       <main className="puestos-main">
         <h2 className="puestos-titulo">STANDINGS</h2>
 
@@ -79,6 +80,7 @@ export default function Puestos({ ordenarDescendente = true }) {
         )}
       </main>
       <Footer />
+    </div>
     </div>
   );
 }

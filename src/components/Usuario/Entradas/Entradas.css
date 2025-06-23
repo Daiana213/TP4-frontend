@@ -7,6 +7,7 @@
   background-repeat: no-repeat;
   color: var(--white);
   font-family: var(--font-primary);
+  background-color: var(--background-color);
 }
 
 .entradas-content {

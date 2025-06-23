@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../Header/UserHeader';
 import Footer from '../../Footer/Footer';
 import StandingsForm from './StandingsForm';
-import './NuevaEntrada.css'; 
+import './NuevaEntrada.css';
 import { apiService } from '../../../../config/api';
 
 export default function NuevaEntrada() {
@@ -83,7 +83,7 @@ export default function NuevaEntrada() {
   return (
     <div className="Nueva-container">
       <Header />
-      <main className="nueva-entrada-content">
+      <div className="nueva-entrada-content">
         <h2>Nueva Entrada del Gran Premio</h2>
 
         {error && <p className="error-message">{error}</p>}
@@ -158,6 +158,7 @@ export default function NuevaEntrada() {
               </div>
             </div>
 
+            {/* Standings con diseño ajustado desde el CSS */}
             <StandingsForm 
               onStandingsChange={handleStandingsChange}
               initialData={standingsData}
@@ -182,7 +183,7 @@ export default function NuevaEntrada() {
             </div>
           </form>
         )}
-      </main>
+      </div>
       <Footer />
     </div>
   );

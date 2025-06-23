@@ -1,20 +1,25 @@
 .puestos-container {
-  width: 100%; /* Antes: 100vw */
-  padding: var(--spacing-lg) var(--spacing-md);
+  width: 100%;
   font-family: var(--font-primary);
   background-color: var(--background-color);
   color: var(--white);
   display: flex;
   flex-direction: column;
+  align-items: center; /* centra el contenido */
   min-height: 100vh;
-  overflow-x: hidden; /* Evita scroll horizontal */
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .puestos-main {
-  width: 100%; /* Antes: 100vw */
-  margin: 2rem auto; /* Centrado horizontalmente */
-  padding : 1rem 10rem;
+  width: 100%;
+  max-width: 800px; /* ancho máximo de la columna */
+  padding: var(--spacing-md);
+  margin: 0 auto; /* centra horizontalmente */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .puestos-titulo {
@@ -25,8 +30,7 @@
 }
 
 .boton-orden {
-  margin: 0 auto var(--spacing-lg);
-  display: block;
+  margin-bottom: var(--spacing-lg);
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--gradient);
   border: none;
@@ -42,11 +46,10 @@
 }
 
 .tabla-seccion {
-  margin-bottom: var(--spacing-xl);
   width: 100%;
+  margin-bottom: var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--spacing-sm);
   box-sizing: border-box;
 }
@@ -57,17 +60,17 @@
   color: var(--white);
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 0.25rem;
+  text-align: center;
 }
 
 .ranking-lista {
   width: 100%;
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .ranking-item {
@@ -102,37 +105,19 @@
   color: var(--text-color);
 }
 
-/* Estados de carga y error */
-.puestos-cargando,
-.puestos-error {
-  text-align: center;
-  font-size: var(--font-size-lg);
-  margin: var(--spacing-md) 0;
-  color: var(--white);
-}
-
-/* Responsivo */
 @media (max-width: 768px) {
   .puestos-main {
     padding: 0 var(--spacing-sm);
   }
 
-  .tabla-seccion {
-    padding: 0;
-    align-items: stretch;
+  .ranking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
   }
 
-  .ranking-lista {
-    width: 100%;
+  .ranking-nombre,
+  .ranking-puntos {
+    font-size: var(--font-size-base);
   }
-  
-  .mensaje {
-    color: green;
-    margin-bottom: 1rem;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
-  
+}
