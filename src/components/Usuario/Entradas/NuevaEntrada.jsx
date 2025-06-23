@@ -107,7 +107,7 @@ export default function NuevaEntrada() {
 
               <div className="form-group">
                 <label>Gran Premio:</label>
-                <p className="gp-nombre">{granPremioDisponible.nombre} (ID: {granPremioDisponible.id})</p>
+                <p className="gp-nombre">{granPremioDisponible.nombre} (Ronda {granPremioDisponible.id})</p>
               </div>
 
               <div className="form-group">

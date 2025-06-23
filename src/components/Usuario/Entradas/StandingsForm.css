@@ -20,6 +20,11 @@
   color: var(--primary-color, #007bff);
 }
 
+.btn{
+  background-color: var(--text-color);
+  color: var(--white);
+}
+
 /* Tabs */
 .tabs {
   display: flex;

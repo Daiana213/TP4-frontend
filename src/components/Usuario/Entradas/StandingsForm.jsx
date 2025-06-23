@@ -182,7 +182,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
       <div className="tabs">
         <button
           type="button"
-          className={activeTab === 'clasificacion' ? 'active' : ''}
+          className={"btn ${activeTab === 'clasificacion' ? 'active' : ''}"}
           onClick={() => setActiveTab('clasificacion')}
         >
           Clasificación
@@ -190,7 +190,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
         {mostrarSprint && (
           <button
             type="button"
-            className={activeTab === 'sprint' ? 'active' : ''}
+            className={"btn ${activeTab === 'sprint' ? 'active' : ''}"}
             onClick={() => setActiveTab('sprint')}
           >
             Sprint
@@ -198,7 +198,7 @@ export default function StandingsForm({ onStandingsChange, initialData = {}, mos
         )}
         <button
           type="button"
-          className={activeTab === 'carrera' ? 'active' : ''}
+          className={"btn {activeTab === 'carrera' ? 'active' : ''}"}
           onClick={() => setActiveTab('carrera')}
         >
           Carrera
