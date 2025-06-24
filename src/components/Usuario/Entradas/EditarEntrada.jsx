@@ -128,7 +128,7 @@ export default function EditarEntrada() {
   return (
     <div className="editar-container">
       <Header />
-      <main className="editar-content">
+      <div className="editar-content">
         <h2>Editar Entrada del Gran Premio</h2>
 
         <form onSubmit={handleSubmit} className="editar-form">
@@ -233,7 +233,7 @@ export default function EditarEntrada() {
             </button>
           </div>
         </form>
-      </main>
+      </div>
       <Footer />
     </div>
   );

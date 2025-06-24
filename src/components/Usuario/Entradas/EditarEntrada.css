@@ -2,21 +2,24 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--gray-color);
+  background: var(--secondary-color);
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .editar-content {
   flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 2rem 1rem;
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .editar-content h2 {
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--font-primary);
+  color: white;
   font-size: 2.5rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -28,6 +31,10 @@
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .form-section {
@@ -36,6 +43,9 @@
   background: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
   border-left: 4px solid var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .form-section h3 {

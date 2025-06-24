@@ -18,7 +18,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: -1;
+  z-index: 1;
 }
 
 /* Sección Hero */
@@ -62,17 +62,18 @@
 }
 
 .cta-button {
-  background: var(--gradient);
-  color: var(--white);
-  padding: 1.2rem 3rem;
-  border: none;
+  padding: 0.8rem 1.8rem;
   border-radius: 30px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
-  font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: var(--shadow);
+  border: none;
+  outline: none;
+  background: var(--gradient);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
 }
 
 .cta-button:hover {
