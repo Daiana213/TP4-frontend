@@ -36,29 +36,44 @@ export const API_ENDPOINTS = {
 
 // Funciones de servicio para las llamadas API
 export const apiService = {
-  // Usuarios
   login: async (credentials) => {
-    const response = await fetch(API_ENDPOINTS.login, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    });
-    if (!response.ok) throw new Error('Error en el login');
-    return response.json();
+    try {
+      const response = await fetch(API_ENDPOINTS.login, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || 'Error al inciar sesión');
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
 
   registro: async (userData) => {
-    const response = await fetch(API_ENDPOINTS.registro, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    });
-    if (!response.ok) throw new Error('Error en el registro');
-    return response.json();
+    try {
+      const response = await fetch(API_ENDPOINTS.registro, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || 'Error en el registro');
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
 
   // Carreras
@@ -290,5 +305,17 @@ export const apiService = {
     });
     if (!response.ok) throw new Error('Error al obtener las entradas del usuario');
     return response.json(); // Devuelve el array de entradas del usuario autenticado
-  }
+  },
+
+  obtenerPuntosUsuario: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/api/puntos/mios`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Error al obtener puntos');
+    return response.json();
+  },
+  
 };

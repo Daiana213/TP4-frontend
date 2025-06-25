@@ -148,7 +148,7 @@ export default function EditarEntrada() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="granPremioId">Gran Premio ID:</label>
+              <label htmlFor="granPremioId">Gran Premio (Ronda):</label>
               <input
                 id="granPremioId"
                 name="GranPremioId"
